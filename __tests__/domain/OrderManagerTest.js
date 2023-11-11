@@ -1,4 +1,3 @@
-import { describe } from 'node:test';
 import OrderManager from '../../src/domain/OrderManager';
 import MenuManager from '../../src/domain/MenuManager';
 
