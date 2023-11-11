@@ -1,4 +1,3 @@
-import { describe } from 'node:test';
 import MenuManager from '../../src/domain/MenuManager';
 
 describe('MenuManager 클래스 테스트', () => {
@@ -21,7 +20,7 @@ describe('MenuManager 클래스 테스트', () => {
       { menu: '로제크림파스타', quantity: 1 },
       { menu: '화이트와인', quantity: 1 },
     ];
-    expect(() => menuGenerator.validateMenu(menu)).toThrow('[ERROR]');
+    expect(() => menuManager.validateMenu(menu)).toThrow('[ERROR]');
   });
 
   test('음료만 주문 시 예외가 발생한다.', () => {
@@ -29,6 +28,6 @@ describe('MenuManager 클래스 테스트', () => {
       { menu: '제로콜라', quantity: 1 },
       { menu: '레드와인', quantity: 1 },
     ];
-    expect(() => menuGenerator.validateMenu(menu)).toThrow('[ERROR]');
+    expect(() => menuManager.validateMenu(menu)).toThrow('[ERROR]');
   });
 });

@@ -42,7 +42,7 @@ class MenuManager {
     let count = 0;
     orderList.forEach((order) => {
       if (this.#findProperty(order.menu, 'type') === type) {
-        count += orderList.quantity;
+        count += order.quantity;
       }
     });
 
@@ -64,7 +64,7 @@ class MenuManager {
   }
 
   #hasOnlyBeverages(orderList) {
-    const isBeverage = true;
+    let isBeverage = true;
     orderList.forEach((order) => {
       if (this.#findProperty(order.menu, 'type') !== 'beverage') {
         isBeverage = false;
