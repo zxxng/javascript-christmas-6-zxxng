@@ -1,7 +1,7 @@
 import { MENU_LIST } from '../constants/menu';
 import { ERROR_MESSEGE } from '../constants/messege';
 
-class MenuGenerator {
+class MenuManager {
   #menuList;
 
   constructor() {
@@ -62,4 +62,4 @@ class MenuGenerator {
   }
 }
 
-export default MenuGenerator;
+export default MenuManager;
