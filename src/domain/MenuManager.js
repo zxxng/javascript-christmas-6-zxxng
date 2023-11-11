@@ -38,6 +38,17 @@ class MenuManager {
     return totalPrice;
   }
 
+  countMenuType(orderList, type) {
+    let count = 0;
+    orderList.forEach((order) => {
+      if (this.#findProperty(order.menu, 'type') === type) {
+        count += orderList.quantity;
+      }
+    });
+
+    return count;
+  }
+
   validateMenu(orderList) {
     this.#containsInvalidMenuName(orderList);
     this.#hasOnlyBeverages(orderList);
