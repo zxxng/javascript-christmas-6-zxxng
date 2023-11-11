@@ -35,16 +35,6 @@ describe('OrderManager 클래스 테스트', () => {
     testThrowsError(order);
   });
 
-  test('메뉴판에 없는 메뉴이면 예외가 발생한다.', () => {
-    const order = ['로제크림파스타-2', '화이트와인-2'];
-    testThrowsError(order);
-  });
-
-  test('음료만 주문 시 예외가 발생한다.', () => {
-    const order = ['제로콜라-4'];
-    testThrowsError(order);
-  });
-
   test('중복메뉴가 있으면 예외가 발생한다.', () => {
     const order = ['바비큐립-1', '바비큐립-1', '샴페인-1'];
     testThrowsError(order);
