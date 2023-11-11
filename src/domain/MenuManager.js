@@ -29,6 +29,15 @@ class MenuManager {
     });
   }
 
+  calculateTotalPrice(orderList) {
+    let totalPrice = 0;
+    orderList.forEach((order) => {
+      totalPrice += this.#findProperty(order.menu, 'price');
+    });
+
+    return totalPrice;
+  }
+
   validateMenu(orderList) {
     this.#containsInvalidMenuName(orderList);
     this.#hasOnlyBeverages(orderList);
@@ -46,7 +55,7 @@ class MenuManager {
   #hasOnlyBeverages(orderList) {
     const isBeverage = true;
     orderList.forEach((order) => {
-      if (this.#findOrderType(order.menu) !== 'beverage') {
+      if (this.#findProperty(order.menu, 'type') !== 'beverage') {
         isBeverage = false;
       }
     });
@@ -56,9 +65,9 @@ class MenuManager {
     }
   }
 
-  #findOrderType(orderMenu) {
+  #findProperty(orderMenu, findProperty) {
     const menu = this.#menuList.find((menu) => menu.name === orderMenu);
-    return menu.type;
+    return menu[findProperty];
   }
 }
 

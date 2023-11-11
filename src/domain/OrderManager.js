@@ -60,6 +60,10 @@ class OrderManager {
   #duplicateCount(orderMenus, order) {
     return orderMenus.filter((menu) => menu === order.menu).length;
   }
+
+  getTotalPrice(menuManager) {
+    return menuManager.calculateTotalPrice(this.#orderList);
+  }
 }
 
 export default OrderManager;
