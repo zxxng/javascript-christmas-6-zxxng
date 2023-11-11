@@ -2,9 +2,9 @@ import { describe } from 'node:test';
 import OrderManager from '../../src/domain/OrderManager';
 
 describe('OrderManager 클래스 테스트', () => {
+  const order = ['티본스테이크-1', '바비큐립-1', '초코케이크-2', '제로콜라-1'];
+  const orderManager = new OrderManager(order);
   test('메뉴와 수량으로 구분된 객체로 반환되는지 확인한다.', () => {
-    const order = ['티본스테이크-1', '바비큐립-1', '초코케이크-2', '제로콜라-1'];
-    const orderManager = new OrderManager(order);
     const orderList = [
       { menu: '티본스테이크', quantity: 1 },
       { menu: '바비큐립', quantity: 1 },
@@ -12,6 +12,11 @@ describe('OrderManager 클래스 테스트', () => {
       { menu: '제로콜라', quantity: 1 },
     ];
     expect(orderManager.getOrderList()).toEqual(orderList);
+  });
+
+  test('총 주문금액을 계산하는지 확인한다.', () => {
+    const totalPrice = 55000 + 54000 + 15000 + 3000;
+    expect(orderManager.calculateTotalPrice()).toBe(totalPrice);
   });
 
   test('메뉴의 개수가 1개 미만이면 예외가 발생한다.', () => {
