@@ -1,5 +1,5 @@
 import { describe } from 'node:test';
-import OrderManager from '../src/domain/OrderManager';
+import OrderManager from '../../src/domain/OrderManager';
 
 describe('OrderManager 클래스 테스트', () => {
   test('메뉴와 수량으로 구분된 객체로 반환되는지 확인한다.', () => {

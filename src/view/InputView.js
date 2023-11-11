@@ -1,5 +1,5 @@
 import { Console } from '@woowacourse/mission-utils';
-import { INPUT_MESSAGE, ERROR_MESSEGE } from '../constants/Message';
+import { INPUT_MESSAGE, ERROR_MESSEGE } from '../constants/messege';
 import REGEXS from '../constants/regexs';
 
 const InputView = {
