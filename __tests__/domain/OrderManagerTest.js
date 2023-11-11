@@ -1,5 +1,8 @@
 import { describe } from 'node:test';
 import OrderManager from '../../src/domain/OrderManager';
+import MenuManager from '../../src/domain/MenuManager';
+
+const menuManager = new MenuManager();
 
 describe('OrderManager 클래스 테스트', () => {
   const order = ['티본스테이크-1', '바비큐립-1', '초코케이크-2', '제로콜라-1'];
@@ -16,7 +19,7 @@ describe('OrderManager 클래스 테스트', () => {
 
   test('총 주문금액을 계산하는지 확인한다.', () => {
     const totalPrice = 55000 + 54000 + 15000 + 3000;
-    expect(orderManager.calculateTotalPrice()).toBe(totalPrice);
+    expect(orderManager.getTotalPrice(menuManager)).toBe(totalPrice);
   });
 
   test('메뉴의 개수가 1개 미만이면 예외가 발생한다.', () => {
