@@ -17,7 +17,7 @@ describe('OrderManager 클래스 테스트', () => {
   });
 
   test('총 주문금액을 계산하는지 확인한다.', () => {
-    const totalPrice = 55000 + 54000 + 15000 + 3000;
+    const totalPrice = 55000 + 54000 + 15000 * 2 + 3000;
     expect(orderManager.getTotalPrice(menuManager)).toBe(totalPrice);
   });
 
