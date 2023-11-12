@@ -1,5 +1,5 @@
-import { MENU_LIST } from '../constants/menu';
-import { ERROR_MESSEGE } from '../constants/messege';
+import { MENU_LIST } from '../constants/menu.js';
+import { ERROR_MESSEGE } from '../constants/messege.js';
 
 class MenuManager {
   #menuList;
@@ -32,7 +32,7 @@ class MenuManager {
   calculateTotalPrice(orderList) {
     let totalPrice = 0;
     orderList.forEach((order) => {
-      totalPrice += this.#findProperty(order.menu, 'price');
+      totalPrice += this.#findProperty(order.menu, 'price') * order.quantity;
     });
 
     return totalPrice;

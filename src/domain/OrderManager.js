@@ -1,4 +1,4 @@
-import { ERROR_MESSEGE } from '../constants/messege';
+import { ERROR_MESSEGE } from '../constants/messege.js';
 
 class OrderManager {
   #orderList;
