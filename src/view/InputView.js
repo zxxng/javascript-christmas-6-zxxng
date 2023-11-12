@@ -13,7 +13,7 @@ const InputView = {
 
   validateDateInput(dateInput) {
     if (!REGEXS.number.test(dateInput)) {
-      throw new Error(ERROR_MESSEGE.nonNumericInput);
+      throw new Error(ERROR_MESSEGE.invalidDate);
     }
     if (1 < Number(dateInput) && Number(dateInput) > 31) {
       throw new Error(ERROR_MESSEGE.invalidDate);
@@ -30,7 +30,7 @@ const InputView = {
 
   validateOrderInput(orderInput) {
     if (REGEXS.specialCharacter.test(orderInput)) {
-      throw new Error(ERROR_MESSEGE.nonSpecialCharacterInput);
+      throw new Error(ERROR_MESSEGE.invalidOrder);
     }
 
     const orderList = orderInput.split(REGEXS.commaAndOptionalSpace);
