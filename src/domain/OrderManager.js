@@ -1,4 +1,4 @@
-import { ERROR_MESSEGE } from '../constants/messege.js';
+import { ERROR_MESSAGE } from '../constants/message.js';
 
 class OrderManager {
   #orderList;
@@ -33,7 +33,7 @@ class OrderManager {
   #hasAtLeastOneMenu() {
     this.#orderList.forEach((order) => {
       if (order.quantity < 1) {
-        throw new Error(ERROR_MESSEGE.invalidOrder);
+        throw new Error(ERROR_MESSAGE.invalidOrder);
       }
     });
   }
@@ -44,7 +44,7 @@ class OrderManager {
       totalQuantity += order.quantity;
     });
     if (totalQuantity > 20) {
-      throw new Error(ERROR_MESSEGE.invalidOrder);
+      throw new Error(ERROR_MESSAGE.invalidOrder);
     }
   }
 
@@ -52,7 +52,7 @@ class OrderManager {
     const orderMenus = this.#orderList.map((order) => order.menu);
     this.#orderList.forEach((order) => {
       if (this.#duplicateCount(orderMenus, order) >= 2) {
-        throw new Error(ERROR_MESSEGE.invalidOrder);
+        throw new Error(ERROR_MESSAGE.invalidOrder);
       }
     });
   }

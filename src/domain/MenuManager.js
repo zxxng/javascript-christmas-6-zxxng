@@ -1,5 +1,5 @@
 import { MENU_LIST } from '../constants/menu.js';
-import { ERROR_MESSEGE } from '../constants/messege.js';
+import { ERROR_MESSAGE } from '../constants/message.js';
 
 class MenuManager {
   #menuList;
@@ -58,7 +58,7 @@ class MenuManager {
     const menuNames = this.#menuList.map((menu) => menu.name);
     orderList.forEach((order) => {
       if (!menuNames.includes(order.menu)) {
-        throw new Error(ERROR_MESSEGE.invalidOrder);
+        throw new Error(ERROR_MESSAGE.invalidOrder);
       }
     });
   }
@@ -72,7 +72,7 @@ class MenuManager {
     });
 
     if (isBeverage) {
-      throw new Error(ERROR_MESSEGE.invalidOrder);
+      throw new Error(ERROR_MESSAGE.invalidOrder);
     }
   }
 

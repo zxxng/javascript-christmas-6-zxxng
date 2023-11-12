@@ -1,5 +1,5 @@
 import { Console } from '@woowacourse/mission-utils';
-import { WOOTECO_MESSAGE, INPUT_MESSAGE, ERROR_MESSEGE } from '../constants/messege.js';
+import { WOOTECO_MESSAGE, INPUT_MESSAGE, ERROR_MESSAGE } from '../constants/message.js';
 import REGEXS from '../constants/regexs.js';
 
 const InputView = {
@@ -13,10 +13,10 @@ const InputView = {
 
   validateDateInput(dateInput) {
     if (!REGEXS.number.test(dateInput)) {
-      throw new Error(ERROR_MESSEGE.invalidDate);
+      throw new Error(ERROR_MESSAGE.invalidDate);
     }
     if (1 < Number(dateInput) && Number(dateInput) > 31) {
-      throw new Error(ERROR_MESSEGE.invalidDate);
+      throw new Error(ERROR_MESSAGE.invalidDate);
     }
   },
 
@@ -30,14 +30,14 @@ const InputView = {
 
   validateOrderInput(orderInput) {
     if (REGEXS.specialCharacter.test(orderInput)) {
-      throw new Error(ERROR_MESSEGE.invalidOrder);
+      throw new Error(ERROR_MESSAGE.invalidOrder);
     }
 
     const orderList = orderInput.split(REGEXS.commaAndOptionalSpace);
     orderList.forEach((order) => {
       const orderDetail = order.split('-');
       if (!orderDetail[1] || !REGEXS.number.test(orderDetail[1])) {
-        throw new Error(ERROR_MESSEGE.invalidOrder);
+        throw new Error(ERROR_MESSAGE.invalidOrder);
       }
     });
   },

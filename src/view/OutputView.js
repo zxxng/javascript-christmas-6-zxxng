@@ -1,5 +1,5 @@
 import { Console } from '@woowacourse/mission-utils';
-import { TITLE_MESSAGE, BENEFIT_MESSAGE, OUTPUT_FORMAT } from '../constants/messege.js';
+import { TITLE_MESSAGE, BENEFIT_MESSAGE, OUTPUT_FORMAT } from '../constants/message.js';
 
 const OutputView = {
   printMenu(orderManager, eventManager, menuManager) {
