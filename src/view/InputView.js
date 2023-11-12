@@ -1,9 +1,10 @@
 import { Console } from '@woowacourse/mission-utils';
-import { INPUT_MESSAGE, ERROR_MESSEGE } from '../constants/messege';
-import REGEXS from '../constants/regexs';
+import { WOOTECO_MESSAGE, INPUT_MESSAGE, ERROR_MESSEGE } from '../constants/messege.js';
+import REGEXS from '../constants/regexs.js';
 
 const InputView = {
   async readDate() {
+    Console.print(WOOTECO_MESSAGE.introduce);
     const input = await Console.readLineAsync(INPUT_MESSAGE.askReservationDate);
     this.validateDateInput(input);
 
@@ -19,9 +20,10 @@ const InputView = {
     }
   },
 
-  async readOrder() {
+  async readOrder(date) {
     const input = await Console.readLineAsync(INPUT_MESSAGE.askMenuAndCount);
     this.validateOrderInput(input);
+    Console.print(WOOTECO_MESSAGE.benefitsPreview(date));
 
     return input.split(REGEXS.commaAndOptionalSpace);
   },
