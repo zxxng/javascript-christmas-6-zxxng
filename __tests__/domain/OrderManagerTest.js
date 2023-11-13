@@ -21,13 +21,6 @@ describe('OrderManager 클래스 테스트', () => {
     expect(orderManager.getTotalPrice(menuManager)).toBe(totalPrice);
   });
 
-  test('메뉴의 개수가 1개 미만이면 예외가 발생한다.', () => {
-    const order = ['티본스테이크-0', '제로콜라-1'];
-    expect(() => {
-      new OrderManager(order);
-    }).toThrow('ERROR');
-  });
-
   test('메뉴를 한 번에 20개 넘게 주문하면 예외가 발생한다.', () => {
     const order = ['양송이수프-12', '티본스테이크-6', '크리스마스파스타-6'];
     expect(() => {

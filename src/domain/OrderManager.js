@@ -25,17 +25,8 @@ class OrderManager {
   }
 
   #valitateOrder() {
-    this.#hasAtLeastOneMenu();
     this.#isMenuWithinMaxLimit();
     this.#hasDuplicateMenu();
-  }
-
-  #hasAtLeastOneMenu() {
-    this.#orderList.forEach((order) => {
-      if (order.quantity < 1) {
-        throw new Error(ERROR_MESSAGE.invalidOrder);
-      }
-    });
   }
 
   #isMenuWithinMaxLimit() {
@@ -43,6 +34,7 @@ class OrderManager {
     this.#orderList.forEach((order) => {
       totalQuantity += order.quantity;
     });
+
     if (totalQuantity > 20) {
       throw new Error(ERROR_MESSAGE.invalidOrder);
     }

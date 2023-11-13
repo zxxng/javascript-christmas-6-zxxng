@@ -35,8 +35,8 @@ const InputView = {
 
     const orderList = orderInput.split(REGEXS.commaAndOptionalSpace);
     orderList.forEach((order) => {
-      const orderDetail = order.split('-');
-      if (!orderDetail[1] || !REGEXS.number.test(orderDetail[1])) {
+      const [menu, quantity] = order.split('-');
+      if (!quantity || !REGEXS.number.test(quantity) || !Number(quantity)) {
         throw new Error(ERROR_MESSAGE.invalidOrder);
       }
     });
