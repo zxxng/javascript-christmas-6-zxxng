@@ -19,6 +19,7 @@ const OutputView = {
 
   printOrderMenu(orderList) {
     Console.print(TITLE_MESSAGE.orderMenu);
+
     orderList.forEach((order) => {
       Console.print(OUTPUT_FORMAT.orderMenu(order));
     });
@@ -27,44 +28,35 @@ const OutputView = {
 
   printBeforeTotalPrice(totalPrice) {
     Console.print(TITLE_MESSAGE.beforeTotalPrice);
+
     Console.print(OUTPUT_FORMAT.price(totalPrice));
     Console.print('');
   },
 
   printGiftMenu(champagne) {
     Console.print(TITLE_MESSAGE.giftMenu);
-    if (champagne) {
-      Console.print(OUTPUT_FORMAT.giftMenu);
-      Console.print('');
-      return;
-    }
-    Console.print(OUTPUT_FORMAT.none);
+
+    Console.print(champagne ? OUTPUT_FORMAT.giftMenu : OUTPUT_FORMAT.none);
     Console.print('');
   },
 
   printBenefitList(benefitInfo) {
     Console.print(TITLE_MESSAGE.benefitList);
-    let isPrinted = false;
-    BENEFIT_MESSAGE.forEach((message) => {
-      if (benefitInfo[message.benefit]) {
-        Console.print(message.text + OUTPUT_FORMAT.price(benefitInfo[message.benefit]));
-        isPrinted = true;
-      }
-    });
-    if (!isPrinted) {
-      Console.print(OUTPUT_FORMAT.none);
-    }
+
+    const benefitsToPrint = BENEFIT_MESSAGE.filter(
+      ({ benefit }) => benefitInfo[benefit] && benefitInfo[benefit] !== 0
+    );
+
+    benefitsToPrint.length
+      ? benefitsToPrint.forEach(({ text, benefit }) => Console.print(text(benefitInfo[benefit])))
+      : Console.print(OUTPUT_FORMAT.none);
     Console.print('');
   },
 
   printTotalDiscount(totalDiscount) {
     Console.print(TITLE_MESSAGE.totalDiscount);
-    if (totalDiscount) {
-      Console.print(OUTPUT_FORMAT.price(totalDiscount));
-      Console.print('');
-      return;
-    }
-    Console.print(OUTPUT_FORMAT.none);
+
+    Console.print(totalDiscount ? OUTPUT_FORMAT.price(totalDiscount) : OUTPUT_FORMAT.none);
     Console.print('');
   },
 
@@ -78,12 +70,7 @@ const OutputView = {
 
   printEventBadge(badge) {
     Console.print(TITLE_MESSAGE.eventBadge);
-    if (badge) {
-      Console.print(badge);
-      Console.print('');
-      return;
-    }
-    Console.print(OUTPUT_FORMAT.none);
+    Console.print(badge ? badge : OUTPUT_FORMAT.none);
     Console.print('');
   },
 };

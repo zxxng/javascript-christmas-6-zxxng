@@ -23,18 +23,26 @@ export const TITLE_MESSAGE = {
   estimatedPayment: '<할인 후 예상 결제 금액>',
   eventBadge: '<12월 이벤트 배지>',
 };
-
-export const BENEFIT_MESSAGE = [
-  { benefit: 'xmasDiscount', text: '크리스마스 디데이 할인: ' },
-  { benefit: 'weekdayDiscount', text: '평일 할인: ' },
-  { benefit: 'weekendDiscount', text: '주말 할인: ' },
-  { benefit: 'specialdayDiscount', text: '특별 할인: ' },
-  { benefit: 'champagne', text: '증정 이벤트: ' },
-];
-
 export const OUTPUT_FORMAT = {
   none: '없음',
   giftMenu: '샴페인 1개',
   orderMenu: (order) => `${order.menu} ${order.quantity}개`,
   price: (price) => `${price}원`,
 };
+
+export const BENEFIT_MESSAGE = [
+  {
+    benefit: 'xmasDiscount',
+    text: (benefit) => `크리스마스 디데이 할인: ${OUTPUT_FORMAT.price(benefit)}`,
+  },
+  { benefit: 'weekdayDiscount', text: (benefit) => `평일 할인: ${OUTPUT_FORMAT.price(benefit)}` },
+  { benefit: 'weekendDiscount', text: (benefit) => `주말 할인: ${OUTPUT_FORMAT.price(benefit)}` },
+  {
+    benefit: 'specialdayDiscount',
+    text: (benefit) => `특별 할인: ${OUTPUT_FORMAT.price(benefit)}`,
+  },
+  {
+    benefit: 'champagne',
+    text: (benefit) => `증정 이벤트: ${benefit ? '25000' : OUTPUT_FORMAT.none}`,
+  },
+];
