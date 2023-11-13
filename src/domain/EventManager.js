@@ -8,7 +8,7 @@ class EventManager {
       weekdayDiscount: 0,
       weekendDiscount: 0,
       champagne: 0,
-      badge: 0,
+      badge: '',
     };
     this.date = date;
   }
@@ -26,14 +26,10 @@ class EventManager {
   }
 
   calculateTotalDiscount() {
-    let totalDiscount = 0;
-    for (const benefit in this.#benefitInfo) {
-      if (benefit !== 'badge') {
-        totalDiscount += this.#benefitInfo[benefit];
-      }
-    }
-
-    return totalDiscount;
+    return Object.values(this.#benefitInfo).reduce(
+      (total, value) => (typeof value === 'number' ? total + value : total),
+      0
+    );
   }
 
   #calculateXmasDiscount() {
@@ -70,16 +66,14 @@ class EventManager {
 
   #canGetBadge() {
     const totalDiscount = this.calculateTotalDiscount();
-    if (totalDiscount >= 20000) {
-      this.#benefitInfo.badge = '산타';
-      return;
-    }
-    if (totalDiscount >= 10000) {
-      this.#benefitInfo.badge = '트리';
-      return;
-    }
-    if (totalDiscount >= 5000) {
-      this.#benefitInfo.badge = '별';
+    const badges = [
+      { min: 20000, badge: '산타' },
+      { min: 10000, badge: '트리' },
+      { min: 5000, badge: '별' },
+    ];
+    const badge = badges.find(({ min }) => totalDiscount >= min);
+    if (badge) {
+      this.#benefitInfo.badge = badge.badge;
     }
   }
 

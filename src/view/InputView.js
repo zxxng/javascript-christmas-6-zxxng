@@ -15,7 +15,7 @@ const InputView = {
     if (!REGEXS.number.test(dateInput)) {
       throw new Error(ERROR_MESSAGE.invalidDate);
     }
-    if (1 < Number(dateInput) && Number(dateInput) > 31) {
+    if (Number(dateInput) < 1 || Number(dateInput) > 31) {
       throw new Error(ERROR_MESSAGE.invalidDate);
     }
   },

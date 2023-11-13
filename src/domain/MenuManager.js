@@ -30,23 +30,18 @@ class MenuManager {
   }
 
   calculateTotalPrice(orderList) {
-    let totalPrice = 0;
-    orderList.forEach((order) => {
-      totalPrice += this.#findProperty(order.menu, 'price') * order.quantity;
-    });
-
-    return totalPrice;
+    return orderList.reduce(
+      (total, order) => total + this.#findProperty(order.menu, 'price') * order.quantity,
+      0
+    );
   }
 
   countMenuType(orderList, type) {
-    let count = 0;
-    orderList.forEach((order) => {
-      if (this.#findProperty(order.menu, 'type') === type) {
-        count += order.quantity;
-      }
-    });
-
-    return count;
+    return orderList.reduce(
+      (count, order) =>
+        this.#findProperty(order.menu, 'type') === type ? count + order.quantity : count,
+      0
+    );
   }
 
   validateMenu(orderList) {
@@ -56,11 +51,9 @@ class MenuManager {
 
   #containsInvalidMenuName(orderList) {
     const menuNames = this.#menuList.map((menu) => menu.name);
-    orderList.forEach((order) => {
-      if (!menuNames.includes(order.menu)) {
-        throw new Error(ERROR_MESSAGE.invalidOrder);
-      }
-    });
+    if (orderList.some((order) => !menuNames.includes(order.menu))) {
+      throw new Error(ERROR_MESSAGE.invalidOrder);
+    }
   }
 
   #hasOnlyBeverages(orderList) {
