@@ -21,7 +21,7 @@ class EventManager {
     this.#calculateXmasDiscount();
     this.#calculateSpecialdayDiscount();
     this.#calculateDecemberDiscount(orderManager, menuManager);
-    this.#canGetChampagne(orderManager, menuManager);
+    this.#canGetChampagne(orderManager);
     this.#canGetBadge();
   }
 
@@ -57,8 +57,8 @@ class EventManager {
     this.#benefitInfo.weekendDiscount = count * 2023;
   }
 
-  #canGetChampagne(orderManager, menuManager) {
-    const totalPrice = orderManager.getTotalPrice(menuManager);
+  #canGetChampagne(orderManager) {
+    const totalPrice = orderManager.getTotalPrice();
     if (totalPrice >= 120000) {
       this.#benefitInfo.champagne = 25000;
     }
