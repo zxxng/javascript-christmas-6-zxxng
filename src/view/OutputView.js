@@ -2,10 +2,10 @@ import { Console } from '@woowacourse/mission-utils';
 import { TITLE_MESSAGE, BENEFIT_MESSAGE, OUTPUT_FORMAT } from '../constants/message.js';
 
 const OutputView = {
-  printMenu(orderManager, eventManager, bill) {
+  printMenu(orderManager, eventManager, billManager) {
     this.orderList = orderManager.getOrderList();
     this.benefitInfo = eventManager.getBenefitInfo();
-    this.bill = bill;
+    this.billManager = billManager;
 
     this.printOrderMenu();
     this.printBeforeTotalPrice();
@@ -26,7 +26,7 @@ const OutputView = {
   },
 
   printBeforeTotalPrice() {
-    const totalPrice = this.bill.getTotalPrice();
+    const totalPrice = this.billManager.getTotalPrice();
     Console.print(TITLE_MESSAGE.beforeTotalPrice);
 
     Console.print(OUTPUT_FORMAT.price(totalPrice));
@@ -56,14 +56,14 @@ const OutputView = {
   },
 
   printTotalDiscount() {
-    const totalDiscount = this.bill.getTotalBenefit();
+    const totalDiscount = this.billManager.getTotalBenefit();
     Console.print(TITLE_MESSAGE.totalDiscount);
     Console.print(totalDiscount ? OUTPUT_FORMAT.price(totalDiscount) : OUTPUT_FORMAT.none);
     Console.print('');
   },
 
   printEstimatedPayment() {
-    const estimatedPayment = this.bill.getEstimatedPayment();
+    const estimatedPayment = this.billManager.getEstimatedPayment();
     Console.print(TITLE_MESSAGE.estimatedPayment);
     Console.print(OUTPUT_FORMAT.price(estimatedPayment));
     Console.print('');

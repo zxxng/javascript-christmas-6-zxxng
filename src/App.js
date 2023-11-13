@@ -3,7 +3,7 @@ import InputView from './view/InputView.js';
 import MenuManager from './domain/MenuManager.js';
 import OrderManager from './domain/OrderManager.js';
 import EventManager from './domain/EventManager.js';
-import Bill from './domain/Bill.js';
+import BillManager from './domain/BillManager.js';
 import OutputView from './view/OutputView.js';
 
 class App {
@@ -18,10 +18,10 @@ class App {
     await this.receiveDateInput();
     await this.receiveOrderInput();
     this.eventManager.calculateDiscount(this.orderManager, this.menuManager);
-    const bill = new Bill(this.orderManager, this.eventManager, this.menuManager);
-    this.eventManager.canGetChampagne(bill.getTotalPrice());
-    this.eventManager.canGetBadge(bill.getTotalBenefit());
-    OutputView.printMenu(this.orderManager, this.eventManager, bill);
+    const billManager = new BillManager(this.orderManager, this.eventManager, this.menuManager);
+    this.eventManager.canGetChampagne(billManager.getTotalPrice());
+    this.eventManager.canGetBadge(billManager.getTotalBenefit());
+    OutputView.printMenu(this.orderManager, this.eventManager, billManager);
   }
 
   async receiveDateInput() {

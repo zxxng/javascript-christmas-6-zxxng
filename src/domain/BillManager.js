@@ -1,4 +1,4 @@
-class Bill {
+class BillManager {
   #orderList;
   #benefitInfo;
   #menuManager;
@@ -37,4 +37,4 @@ class Bill {
   }
 }
 
-export default Bill;
+export default BillManager;
