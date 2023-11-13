@@ -1,3 +1,5 @@
+import { BADGES } from '../constants/options';
+
 class EventManager {
   #benefitInfo;
 
@@ -17,19 +19,23 @@ class EventManager {
     return this.#benefitInfo;
   }
 
-  calculateGuestBenefit(orderManager, menuManager) {
+  canGetChampagne(totalPrice) {
+    if (totalPrice >= 120000) {
+      this.#benefitInfo.champagne = '샴페인 1개';
+    }
+  }
+
+  canGetBadge(totalDiscount) {
+    const badge = BADGES.find(({ min }) => totalDiscount >= min);
+    if (badge) {
+      this.#benefitInfo.badge = badge.badge;
+    }
+  }
+
+  calculateDiscount(orderManager, menuManager) {
     this.#calculateXmasDiscount();
     this.#calculateSpecialdayDiscount();
     this.#calculateDecemberDiscount(orderManager, menuManager);
-    this.#canGetChampagne(orderManager);
-    this.#canGetBadge();
-  }
-
-  calculateTotalDiscount() {
-    return Object.values(this.#benefitInfo).reduce(
-      (total, value) => (typeof value === 'number' ? total + value : total),
-      0
-    );
   }
 
   #calculateXmasDiscount() {
@@ -55,26 +61,6 @@ class EventManager {
 
     const count = menuManager.countMenuType(orderList, 'main');
     this.#benefitInfo.weekendDiscount = count * 2023;
-  }
-
-  #canGetChampagne(orderManager) {
-    const totalPrice = orderManager.getTotalPrice();
-    if (totalPrice >= 120000) {
-      this.#benefitInfo.champagne = 25000;
-    }
-  }
-
-  #canGetBadge() {
-    const totalDiscount = this.calculateTotalDiscount();
-    const badges = [
-      { min: 20000, badge: '산타' },
-      { min: 10000, badge: '트리' },
-      { min: 5000, badge: '별' },
-    ];
-    const badge = badges.find(({ min }) => totalDiscount >= min);
-    if (badge) {
-      this.#benefitInfo.badge = badge.badge;
-    }
   }
 
   #getDayOfWeek() {

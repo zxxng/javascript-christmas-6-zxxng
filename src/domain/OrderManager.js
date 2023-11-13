@@ -14,10 +14,6 @@ class OrderManager {
     return this.#orderList;
   }
 
-  getTotalPrice() {
-    return this.#menuManager.calculateTotalPrice(this.#orderList);
-  }
-
   #parseOrder(order) {
     return order.map((item) => {
       const [menu, quantity] = item.split('-');

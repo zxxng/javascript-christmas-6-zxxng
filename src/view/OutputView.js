@@ -2,75 +2,76 @@ import { Console } from '@woowacourse/mission-utils';
 import { TITLE_MESSAGE, BENEFIT_MESSAGE, OUTPUT_FORMAT } from '../constants/message.js';
 
 const OutputView = {
-  printMenu(orderManager, eventManager, menuManager) {
-    const orderList = orderManager.getOrderList();
-    const benefitInfo = eventManager.getBenefitInfo();
-    const totalPrice = orderManager.getTotalPrice(menuManager);
-    const totalDiscount = eventManager.calculateTotalDiscount();
+  printMenu(orderManager, eventManager, bill) {
+    this.orderList = orderManager.getOrderList();
+    this.benefitInfo = eventManager.getBenefitInfo();
+    this.bill = bill;
 
-    this.printOrderMenu(orderList);
-    this.printBeforeTotalPrice(totalPrice);
-    this.printGiftMenu(benefitInfo.champagne);
-    this.printBenefitList(benefitInfo);
-    this.printTotalDiscount(totalDiscount);
-    this.printEstimatedPayment(totalPrice, totalDiscount, benefitInfo.champagne);
-    this.printEventBadge(benefitInfo.badge);
+    this.printOrderMenu();
+    this.printBeforeTotalPrice();
+    this.printGiftMenu();
+    this.printBenefitList();
+    this.printTotalDiscount();
+    this.printEstimatedPayment();
+    this.printEventBadge();
   },
 
-  printOrderMenu(orderList) {
+  printOrderMenu() {
     Console.print(TITLE_MESSAGE.orderMenu);
 
-    orderList.forEach((order) => {
+    this.orderList.forEach((order) => {
       Console.print(OUTPUT_FORMAT.orderMenu(order));
     });
     Console.print('');
   },
 
-  printBeforeTotalPrice(totalPrice) {
+  printBeforeTotalPrice() {
+    const totalPrice = this.bill.getTotalPrice();
     Console.print(TITLE_MESSAGE.beforeTotalPrice);
 
     Console.print(OUTPUT_FORMAT.price(totalPrice));
     Console.print('');
   },
 
-  printGiftMenu(champagne) {
+  printGiftMenu() {
     Console.print(TITLE_MESSAGE.giftMenu);
 
-    Console.print(champagne ? OUTPUT_FORMAT.giftMenu : OUTPUT_FORMAT.none);
+    Console.print(this.benefitInfo.champagne ? OUTPUT_FORMAT.giftMenu : OUTPUT_FORMAT.none);
     Console.print('');
   },
 
-  printBenefitList(benefitInfo) {
+  printBenefitList() {
     Console.print(TITLE_MESSAGE.benefitList);
 
     const benefitsToPrint = BENEFIT_MESSAGE.filter(
-      ({ benefit }) => benefitInfo[benefit] && benefitInfo[benefit] !== 0
+      ({ benefit }) => this.benefitInfo[benefit] && this.benefitInfo[benefit] !== 0
     );
 
     benefitsToPrint.length
-      ? benefitsToPrint.forEach(({ text, benefit }) => Console.print(text(benefitInfo[benefit])))
+      ? benefitsToPrint.forEach(({ text, benefit }) =>
+          Console.print(text(this.benefitInfo[benefit]))
+        )
       : Console.print(OUTPUT_FORMAT.none);
     Console.print('');
   },
 
-  printTotalDiscount(totalDiscount) {
+  printTotalDiscount() {
+    const totalDiscount = this.bill.getTotalBenefit();
     Console.print(TITLE_MESSAGE.totalDiscount);
-
     Console.print(totalDiscount ? OUTPUT_FORMAT.price(totalDiscount) : OUTPUT_FORMAT.none);
     Console.print('');
   },
 
-  printEstimatedPayment(totalPrice, totalDiscount, champagne) {
+  printEstimatedPayment() {
+    const estimatedPayment = this.bill.getEstimatedPayment();
     Console.print(TITLE_MESSAGE.estimatedPayment);
-    let estimatedPayment = totalPrice - totalDiscount;
-    if (champagne) estimatedPayment += 25000;
     Console.print(OUTPUT_FORMAT.price(estimatedPayment));
     Console.print('');
   },
 
-  printEventBadge(badge) {
+  printEventBadge() {
     Console.print(TITLE_MESSAGE.eventBadge);
-    Console.print(badge ? badge : OUTPUT_FORMAT.none);
+    Console.print(this.badge ? this.badge : OUTPUT_FORMAT.none);
     Console.print('');
   },
 };

@@ -28,11 +28,9 @@ class MenuManager {
     });
   }
 
-  calculateTotalPrice(orderList) {
-    return orderList.reduce(
-      (total, order) => total + this.findProperty(order.menu, 'price') * order.quantity,
-      0
-    );
+  findProperty(orderMenu, findProperty) {
+    const menu = this.#menuList.find((menu) => menu.name === orderMenu);
+    return menu[findProperty];
   }
 
   countMenuType(orderList, type) {
@@ -41,11 +39,6 @@ class MenuManager {
         this.findProperty(order.menu, 'type') === type ? count + order.quantity : count,
       0
     );
-  }
-
-  findProperty(orderMenu, findProperty) {
-    const menu = this.#menuList.find((menu) => menu.name === orderMenu);
-    return menu[findProperty];
   }
 }
 

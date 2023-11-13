@@ -1,9 +1,10 @@
+import { Console } from '@woowacourse/mission-utils';
 import InputView from './view/InputView.js';
 import MenuManager from './domain/MenuManager.js';
 import OrderManager from './domain/OrderManager.js';
 import EventManager from './domain/EventManager.js';
+import Bill from './domain/Bill.js';
 import OutputView from './view/OutputView.js';
-import { Console } from '@woowacourse/mission-utils';
 
 class App {
   constructor() {
@@ -16,8 +17,11 @@ class App {
   async run() {
     await this.receiveDateInput();
     await this.receiveOrderInput();
-    this.eventManager.calculateGuestBenefit(this.orderManager, this.menuManager);
-    OutputView.printMenu(this.orderManager, this.eventManager, this.menuManager);
+    this.eventManager.calculateDiscount(this.orderManager, this.menuManager);
+    const bill = new Bill(this.orderManager, this.eventManager, this.menuManager);
+    this.eventManager.canGetChampagne(bill.getTotalPrice());
+    this.eventManager.canGetBadge(bill.getTotalBenefit());
+    OutputView.printMenu(this.orderManager, this.eventManager, bill);
   }
 
   async receiveDateInput() {
