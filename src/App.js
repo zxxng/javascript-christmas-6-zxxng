@@ -33,7 +33,7 @@ class App {
   async receiveOrderInput() {
     try {
       const order = await InputView.readOrder(this.date);
-      this.orderManager = new OrderManager(order);
+      this.orderManager = new OrderManager(order, this.menuManager);
     } catch (err) {
       Console.print(err.message);
       await this.receiveOrderInput();

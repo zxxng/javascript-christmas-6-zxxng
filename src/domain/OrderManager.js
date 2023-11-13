@@ -2,14 +2,20 @@ import { ERROR_MESSAGE } from '../constants/message.js';
 
 class OrderManager {
   #orderList;
+  #menuManager;
 
-  constructor(order) {
+  constructor(order, menuManager) {
+    this.#menuManager = menuManager;
     this.#orderList = this.#parseOrder(order);
-    this.#valitateOrder();
+    this.#validateOrder();
   }
 
   getOrderList() {
     return this.#orderList;
+  }
+
+  getTotalPrice() {
+    return this.#menuManager.calculateTotalPrice(this.#orderList);
   }
 
   #parseOrder(order) {
@@ -19,14 +25,23 @@ class OrderManager {
     });
   }
 
-  #valitateOrder() {
+  #validateOrder() {
     this.#isMenuWithinMaxLimit();
+    this.#containsInvalidMenuName();
     this.#hasDuplicateMenu();
+    this.#hasOnlyBeverages();
   }
 
   #isMenuWithinMaxLimit() {
     const totalQuantity = this.#orderList.reduce((total, order) => total + order.quantity, 0);
     if (totalQuantity > 20) {
+      throw new Error(ERROR_MESSAGE.invalidOrder);
+    }
+  }
+
+  #containsInvalidMenuName() {
+    const menuNames = this.#menuManager.getMenuList().map((menu) => menu.name);
+    if (this.#orderList.some((order) => !menuNames.includes(order.menu))) {
       throw new Error(ERROR_MESSAGE.invalidOrder);
     }
   }
@@ -38,8 +53,17 @@ class OrderManager {
     }
   }
 
-  getTotalPrice(menuManager) {
-    return menuManager.calculateTotalPrice(this.#orderList);
+  #hasOnlyBeverages() {
+    let isBeverage = true;
+    this.#orderList.forEach((order) => {
+      if (this.#menuManager.findProperty(order.menu, 'type') !== 'beverage') {
+        isBeverage = false;
+      }
+    });
+
+    if (isBeverage) {
+      throw new Error(ERROR_MESSAGE.invalidOrder);
+    }
   }
 }
 
