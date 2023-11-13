@@ -14,7 +14,7 @@ describe('EventManager 클래스 테스트', () => {
     const date = 5;
     const eventManager = new EventManager(date);
 
-    eventManager.calculateGuestBenefit(mockOrderManager, mockMenuManager);
+    eventManager.calculateDiscount(mockOrderManager, mockMenuManager);
 
     const benefitInfo = eventManager.getBenefitInfo();
     expect(benefitInfo.xmasDiscount).toBe(1400);
@@ -24,7 +24,7 @@ describe('EventManager 클래스 테스트', () => {
     const date = 17;
     const eventManager = new EventManager(date);
 
-    eventManager.calculateGuestBenefit(mockOrderManager, mockMenuManager);
+    eventManager.calculateDiscount(mockOrderManager, mockMenuManager);
 
     const benefitInfo = eventManager.getBenefitInfo();
     expect(benefitInfo.specialdayDiscount).toBe(1000);
@@ -43,7 +43,7 @@ describe('EventManager 클래스 테스트', () => {
 
     mockOrderManager.getOrderList.mockReturnValue(menuList);
     mockMenuManager.countMenuType.mockReturnValue(2);
-    eventManager.calculateGuestBenefit(mockOrderManager, mockMenuManager);
+    eventManager.calculateDiscount(mockOrderManager, mockMenuManager);
 
     const benefitInfo = eventManager.getBenefitInfo();
     expect(benefitInfo.weekdayDiscount).toBe(4046);
@@ -56,32 +56,24 @@ describe('EventManager 클래스 테스트', () => {
 
     mockOrderManager.getOrderList.mockReturnValue(menuList);
     mockMenuManager.countMenuType.mockReturnValue(2);
-    eventManager.calculateGuestBenefit(mockOrderManager, mockMenuManager);
+    eventManager.calculateDiscount(mockOrderManager, mockMenuManager);
 
     const benefitInfo = eventManager.getBenefitInfo();
     expect(benefitInfo.weekdayDiscount).toBe(0);
     expect(benefitInfo.weekendDiscount).toBe(4046);
   });
 
+  const date = 10;
+  const eventManager = new EventManager(date);
   test('샴페인 증정이 되는지 확인한다.', () => {
-    const date = 10;
-    const eventManager = new EventManager(date);
-
-    mockOrderManager.getTotalPrice.mockReturnValue(120000);
-    eventManager.calculateGuestBenefit(mockOrderManager, mockMenuManager);
+    eventManager.canGetChampagne(120000);
 
     const benefitInfo = eventManager.getBenefitInfo();
-    expect(benefitInfo.champagne).toBe(25000);
+    expect(benefitInfo.champagne).toBe('샴페인 1개');
   });
 
   test('할인 금액에 따른 배지 증정이 되는지 확인한다.', () => {
-    const date = 10;
-    const eventManager = new EventManager(date);
-
-    mockOrderManager.getOrderList.mockReturnValue(menuList);
-    mockMenuManager.countMenuType.mockReturnValue(10);
-    mockOrderManager.getTotalPrice.mockReturnValue(120000);
-    eventManager.calculateGuestBenefit(mockOrderManager, mockMenuManager);
+    eventManager.canGetBadge(20000);
 
     const benefitInfo = eventManager.getBenefitInfo();
     expect(benefitInfo.badge).toBe('산타');
