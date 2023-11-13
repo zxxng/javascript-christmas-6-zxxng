@@ -69,7 +69,7 @@ describe('EventManager 클래스 테스트', () => {
     eventManager.canGetChampagne(120000);
 
     const benefitInfo = eventManager.getBenefitInfo();
-    expect(benefitInfo.champagne).toBe('샴페인 1개');
+    expect(benefitInfo.isChampagne).toBe(true);
   });
 
   test('할인 금액에 따른 배지 증정이 되는지 확인한다.', () => {

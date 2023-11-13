@@ -42,7 +42,7 @@ export const BENEFIT_MESSAGE = [
     text: (benefit) => `특별 할인: ${OUTPUT_FORMAT.price(benefit)}`,
   },
   {
-    benefit: 'champagne',
-    text: (benefit) => `증정 이벤트: ${benefit ? '25000' : OUTPUT_FORMAT.none}`,
+    benefit: 'isChampagne',
+    text: (benefit) => `증정 이벤트: ${benefit ? OUTPUT_FORMAT.price(25000) : OUTPUT_FORMAT.none}`,
   },
 ];

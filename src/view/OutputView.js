@@ -36,7 +36,7 @@ const OutputView = {
   printGiftMenu() {
     Console.print(TITLE_MESSAGE.giftMenu);
 
-    Console.print(this.benefitInfo.champagne ? OUTPUT_FORMAT.giftMenu : OUTPUT_FORMAT.none);
+    Console.print(this.benefitInfo.isChampagne ? OUTPUT_FORMAT.giftMenu : OUTPUT_FORMAT.none);
     Console.print('');
   },
 

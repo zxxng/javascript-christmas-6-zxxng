@@ -22,7 +22,7 @@ describe('BillManager 클래스 테스트', () => {
     xmasDiscount: 1500,
     weekdayDiscount: 4046,
     weekendDiscount: 0,
-    champagne: '샴페인 1개',
+    isChampagne: true,
   };
   const mockMenuPrice = { 티본스테이크: 55000, 크리스마스파스타: 25000, 레드와인: 60000 };
 
@@ -38,7 +38,7 @@ describe('BillManager 클래스 테스트', () => {
   });
 
   test('총 혜택금액을 반환하는지 확인한다.', () => {
-    const expectedTotalBenefit = 1500 + 4046 + (mockBenefitInfo.champagne ? 25000 : 0);
+    const expectedTotalBenefit = 1500 + 4046 + (mockBenefitInfo.isChampagne ? 25000 : 0);
     expect(billManager.getTotalBenefit()).toBe(expectedTotalBenefit);
   });
 
@@ -46,7 +46,7 @@ describe('BillManager 클래스 테스트', () => {
     const expectedPayment =
       billManager.getTotalPrice() -
       billManager.getTotalBenefit() +
-      (mockBenefitInfo.champagne ? 25000 : 0);
+      (mockBenefitInfo.isChampagne ? 25000 : 0);
     expect(billManager.getEstimatedPayment()).toBe(expectedPayment);
   });
 });

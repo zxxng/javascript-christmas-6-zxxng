@@ -10,7 +10,7 @@ class EventManager {
       specialdayDiscount: 0,
       weekdayDiscount: 0,
       weekendDiscount: 0,
-      champagne: 0,
+      isChampagne: false,
       badge: '',
     };
     this.date = date;
@@ -22,7 +22,7 @@ class EventManager {
 
   canGetChampagne(totalPrice) {
     if (totalPrice >= UNIT.champagneThreshold) {
-      this.#benefitInfo.champagne = '샴페인 1개';
+      this.#benefitInfo.isChampagne = true;
     }
   }
 

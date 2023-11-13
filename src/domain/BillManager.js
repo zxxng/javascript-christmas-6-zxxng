@@ -18,7 +18,7 @@ class BillManager {
   }
 
   getTotalBenefit() {
-    return this.#benefitInfo.champagne
+    return this.#benefitInfo.isChampagne
       ? this.#getTotalDiscount() + 25000
       : this.#getTotalDiscount();
   }
