@@ -24,8 +24,6 @@ class BillManager {
   }
 
   getEstimatedPayment() {
-    console.log(`this.getTotalPrice(): ${this.getTotalPrice()}`);
-    console.log(`this.getTotalDiscount(): ${this.#getTotalDiscount()}`);
     return this.getTotalPrice() - this.#getTotalDiscount();
   }
 

@@ -1,4 +1,5 @@
 import { ERROR_MESSAGE } from '../constants/message.js';
+import { MENU_TYPE } from '../constants/menu.js';
 
 class OrderManager {
   #orderList;
@@ -52,7 +53,7 @@ class OrderManager {
   #hasOnlyBeverages() {
     let isBeverage = true;
     this.#orderList.forEach((order) => {
-      if (this.#menuManager.findProperty(order.menu, 'type') !== 'beverage') {
+      if (this.#menuManager.findProperty(order.menu, 'type') !== MENU_TYPE.beverage) {
         isBeverage = false;
       }
     });

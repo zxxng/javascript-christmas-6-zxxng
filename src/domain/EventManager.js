@@ -1,4 +1,5 @@
-import { BADGES } from '../constants/options';
+import { UNIT, DATE, BADGES } from '../constants/options.js';
+import { MENU_TYPE } from '../constants/menu.js';
 
 class EventManager {
   #benefitInfo;
@@ -20,7 +21,7 @@ class EventManager {
   }
 
   canGetChampagne(totalPrice) {
-    if (totalPrice >= 120000) {
+    if (totalPrice >= UNIT.champagneThreshold) {
       this.#benefitInfo.champagne = '샴페인 1개';
     }
   }
@@ -39,32 +40,33 @@ class EventManager {
   }
 
   #calculateXmasDiscount() {
-    if (this.date <= 25) {
-      this.#benefitInfo.xmasDiscount = 1000 + (this.date - 1) * 100;
+    if (this.date <= DATE.xmas) {
+      this.#benefitInfo.xmasDiscount =
+        UNIT.baseXmasDiscountAmount + (this.date - 1) * UNIT.dailyXmasDiscountAmount;
     }
   }
 
   #calculateSpecialdayDiscount() {
-    if ([3, 10, 17, 24, 25, 31].includes(this.date)) {
+    if (DATE.specialDays.includes(this.date)) {
       this.#benefitInfo.specialdayDiscount = 1000;
     }
   }
 
   #calculateDecemberDiscount(orderManager, menuManager) {
     const orderList = orderManager.getOrderList();
-    if (this.#getDayOfWeek() < 5) {
-      const count = menuManager.countMenuType(orderList, 'dessert');
-      this.#benefitInfo.weekdayDiscount = count * 2023;
+    if (DATE.isWeekday(this.#getDayOfWeek())) {
+      const count = menuManager.countMenuType(orderList, MENU_TYPE.dessert);
+      this.#benefitInfo.weekdayDiscount = count * UNIT.decemberDiscountAmount;
 
       return;
     }
 
-    const count = menuManager.countMenuType(orderList, 'main');
-    this.#benefitInfo.weekendDiscount = count * 2023;
+    const count = menuManager.countMenuType(orderList, MENU_TYPE.main);
+    this.#benefitInfo.weekendDiscount = count * UNIT.decemberDiscountAmount;
   }
 
   #getDayOfWeek() {
-    return new Date(2023, 12 - 1, this.date).getDay();
+    return new Date(DATE.thisYear, DATE.thisMonth, this.date).getDay();
   }
 }
 

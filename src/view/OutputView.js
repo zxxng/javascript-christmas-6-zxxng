@@ -71,7 +71,7 @@ const OutputView = {
 
   printEventBadge() {
     Console.print(TITLE_MESSAGE.eventBadge);
-    Console.print(this.badge ? this.badge : OUTPUT_FORMAT.none);
+    Console.print(this.benefitInfo.badge ? this.benefitInfo.badge : OUTPUT_FORMAT.none);
     Console.print('');
   },
 };
