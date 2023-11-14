@@ -8,9 +8,14 @@ const InputView = (() => {
     if (!REGEXS.number.test(dateInput)) {
       throw new Error(ERROR_MESSAGE.invalidDate);
     }
-    if (Number(dateInput) < DATE.minDate || Number(dateInput) > DATE.maxDate) {
+
+    if (isNotWithinDateRange(Number(dateInput))) {
       throw new Error(ERROR_MESSAGE.invalidDate);
     }
+  };
+
+  const isNotWithinDateRange = function (date) {
+    return date < DATE.minDate || date > DATE.maxDate;
   };
 
   const validateOrderInput = function (orderInput) {
@@ -18,30 +23,40 @@ const InputView = (() => {
       throw new Error(ERROR_MESSAGE.invalidOrder);
     }
 
-    const orderList = orderInput.trim().split(REGEXS.commaAndOptionalSpace);
+    const orderList = orderInput.split(REGEXS.commaAndOptionalSpace);
     orderList.forEach((order) => {
       const [menu, quantity] = order.split('-');
-      if (!quantity || !REGEXS.number.test(quantity) || !Number(quantity)) {
+      if (isInvalidQuantity(quantity)) {
         throw new Error(ERROR_MESSAGE.invalidOrder);
       }
     });
   };
 
+  const isInvalidQuantity = function (quantity) {
+    return !quantity || !REGEXS.number.test(quantity) || !Number(quantity);
+  };
+
+  const trimReadLineAsync = async function (promptMessage) {
+    const input = await Console.readLineAsync(promptMessage);
+
+    return input.trim();
+  };
+
   return {
     async readDate() {
       Console.print(WOOTECO_MESSAGE.introduce);
-      const input = await Console.readLineAsync(INPUT_MESSAGE.askReservationDate);
-      validateDateInput(input.trim());
+      const input = await trimReadLineAsync(INPUT_MESSAGE.askReservationDate);
+      validateDateInput(input);
 
-      return Number(input.trim());
+      return Number(input);
     },
 
     async readOrder(date) {
-      const input = await Console.readLineAsync(INPUT_MESSAGE.askMenuAndCount);
+      const input = await trimReadLineAsync(INPUT_MESSAGE.askMenuAndCount);
       validateOrderInput(input);
       Console.print(WOOTECO_MESSAGE.benefitsPreview(date));
 
-      return input.trim().split(REGEXS.commaAndOptionalSpace);
+      return input.split(REGEXS.commaAndOptionalSpace);
     },
   };
 })();
