@@ -1,5 +1,5 @@
 import { ERROR_MESSAGE } from '../constants/messages.js';
-import { MENU_TYPE } from '../constants/menu.js';
+import { CATEGORY } from '../constants/menu.js';
 import { UNIT, PROPERTY } from '../constants/options.js';
 
 class OrderManager {
@@ -19,7 +19,7 @@ class OrderManager {
   #parseOrder(order) {
     return order.map((item) => {
       const [menu, quantity] = item.split('-');
-      return { menu, quantity: Number(quantity) };
+      return { menu: menu, quantity: Number(quantity) };
     });
   }
 
@@ -54,7 +54,7 @@ class OrderManager {
   #hasOnlyBeverages() {
     let isBeverage = true;
     this.#orderList.forEach((order) => {
-      if (this.#menuManager.findProperty(order.menu, PROPERTY.type) !== MENU_TYPE.beverage) {
+      if (this.#menuManager.findProperty(order.menu, PROPERTY.category) !== CATEGORY.beverage) {
         isBeverage = false;
       }
     });

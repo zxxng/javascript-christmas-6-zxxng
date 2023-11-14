@@ -1,26 +1,22 @@
 import EventManager from '../../src/models/EventManager';
 
-const mockOrderManager = {
-  getOrderList: jest.fn(),
-  getTotalPrice: jest.fn(),
-};
+function createMockManager(methods) {
+  const mockManager = {};
+  methods.forEach((method) => {
+    mockManager[method] = jest.fn();
+  });
+  return mockManager;
+}
 
-const mockMenuManager = {
-  countMenuType: jest.fn(),
-};
-
-const mockBillManager = {
-  getTotalPrice: jest.fn(),
-  getTotalBenefit: jest.fn(),
-};
+const mockOrderManager = createMockManager(['getOrderList', 'getTotalPrice']);
+const mockMenuManager = createMockManager(['countMenuCategory']);
+const mockBillManager = createMockManager(['getTotalPrice', 'getTotalBenefit']);
 
 describe('EventManager 클래스 테스트', () => {
   test('크리스마스 할인이 되는지 확인한다.', () => {
     const date = 5;
     const eventManager = new EventManager(date);
-
     eventManager.calculateDiscount(mockOrderManager, mockMenuManager);
-
     const benefitInfo = eventManager.getBenefitInfo();
     expect(benefitInfo.xmasDiscount).toBe(-1400);
   });
@@ -28,9 +24,7 @@ describe('EventManager 클래스 테스트', () => {
   test('특별일자 할인이 되는지 확인한다.', () => {
     const date = 17;
     const eventManager = new EventManager(date);
-
     eventManager.calculateDiscount(mockOrderManager, mockMenuManager);
-
     const benefitInfo = eventManager.getBenefitInfo();
     expect(benefitInfo.specialdayDiscount).toBe(-1000);
   });
@@ -45,11 +39,9 @@ describe('EventManager 클래스 테스트', () => {
   test('평일 할인이 되는지 확인한다.', () => {
     const date = 11;
     const eventManager = new EventManager(date);
-
     mockOrderManager.getOrderList.mockReturnValue(menuList);
-    mockMenuManager.countMenuType.mockReturnValue(2);
+    mockMenuManager.countMenuCategory.mockReturnValue(2);
     eventManager.calculateDiscount(mockOrderManager, mockMenuManager);
-
     const benefitInfo = eventManager.getBenefitInfo();
     expect(benefitInfo.weekdayDiscount).toBe(-4046);
     expect(benefitInfo.weekendDiscount).toBe(0);
@@ -58,11 +50,9 @@ describe('EventManager 클래스 테스트', () => {
   test('주말 할인이 되는지 확인한다.', () => {
     const date = 15;
     const eventManager = new EventManager(date);
-
     mockOrderManager.getOrderList.mockReturnValue(menuList);
-    mockMenuManager.countMenuType.mockReturnValue(2);
+    mockMenuManager.countMenuCategory.mockReturnValue(2);
     eventManager.calculateDiscount(mockOrderManager, mockMenuManager);
-
     const benefitInfo = eventManager.getBenefitInfo();
     expect(benefitInfo.weekdayDiscount).toBe(0);
     expect(benefitInfo.weekendDiscount).toBe(-4046);
@@ -73,7 +63,6 @@ describe('EventManager 클래스 테스트', () => {
   test('샴페인 증정이 되는지 확인한다.', () => {
     mockBillManager.getTotalPrice.mockReturnValue(120000);
     eventManager.canGetChampagne(mockBillManager);
-
     const benefitInfo = eventManager.getBenefitInfo();
     expect(benefitInfo.isChampagne).toBe(true);
   });
@@ -81,7 +70,6 @@ describe('EventManager 클래스 테스트', () => {
   test('할인 금액에 따른 배지 증정이 되는지 확인한다.', () => {
     mockBillManager.getTotalBenefit.mockReturnValue(-20000);
     eventManager.canGetBadge(mockBillManager);
-
     const benefitInfo = eventManager.getBenefitInfo();
     expect(benefitInfo.badge).toBe('산타');
   });

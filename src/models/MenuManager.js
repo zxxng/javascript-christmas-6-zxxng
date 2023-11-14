@@ -15,16 +15,16 @@ class MenuManager {
 
   #generateMenusFromList() {
     MENU_LIST.forEach((menuItem) => {
-      this.#addMenuItems(menuItem.list, menuItem.type);
+      this.#addMenuItems(menuItem.list, menuItem.category);
     });
   }
 
-  #addMenuItems(list, type) {
-    list.forEach((menuItem) => {
+  #addMenuItems(list, category) {
+    list.forEach(([name, price]) => {
       this.#menuList.push({
-        type: type,
-        name: menuItem[0],
-        price: menuItem[1],
+        category: category,
+        name: name,
+        price: price,
       });
     });
   }
@@ -34,12 +34,12 @@ class MenuManager {
     return menu[findProperty];
   }
 
-  countMenuType(orderList, type) {
-    return orderList.reduce(
-      (count, order) =>
-        this.findProperty(order.menu, PROPERTY.type) === type ? count + order.quantity : count,
-      0
-    );
+  countMenuCategory(orderList, category) {
+    return orderList.reduce((count, order) => {
+      if (this.findProperty(order.menu, PROPERTY.category) === category) {
+        count + order.quantity;
+      }
+    }, 0);
   }
 }
 

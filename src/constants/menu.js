@@ -22,7 +22,7 @@ export const BEVERAGE = Object.freeze([
   ['샴페인', 25000],
 ]);
 
-export const MENU_TYPE = Object.freeze({
+export const CATEGORY = Object.freeze({
   appetizer: 'appetizer',
   main: 'main',
   dessert: 'dessert',
@@ -30,8 +30,8 @@ export const MENU_TYPE = Object.freeze({
 });
 
 export const MENU_LIST = Object.freeze([
-  { list: APPETIZER, type: MENU_TYPE.appetizer },
-  { list: MAIN, type: MENU_TYPE.main },
-  { list: DESSERT, type: MENU_TYPE.dessert },
-  { list: BEVERAGE, type: MENU_TYPE.beverage },
+  { list: APPETIZER, category: CATEGORY.appetizer },
+  { list: MAIN, category: CATEGORY.main },
+  { list: DESSERT, category: CATEGORY.dessert },
+  { list: BEVERAGE, category: CATEGORY.beverage },
 ]);

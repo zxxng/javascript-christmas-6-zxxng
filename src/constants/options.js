@@ -35,6 +35,6 @@ export const BENEFIT_LIST = Object.freeze({
 });
 
 export const PROPERTY = Object.freeze({
-  type: 'type',
+  category: 'category',
   price: 'price',
 });
