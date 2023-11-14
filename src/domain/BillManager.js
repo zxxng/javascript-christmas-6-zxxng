@@ -1,3 +1,5 @@
+import { UNIT } from '../constants/options.js';
+
 class BillManager {
   #orderList;
   #benefitInfo;
@@ -19,12 +21,12 @@ class BillManager {
 
   getTotalBenefit() {
     return this.#benefitInfo.isChampagne
-      ? this.#getTotalDiscount() + 25000
+      ? this.#getTotalDiscount() + UNIT.champagneDiscountAmount
       : this.#getTotalDiscount();
   }
 
   getEstimatedPayment() {
-    return this.getTotalPrice() - this.#getTotalDiscount();
+    return this.getTotalPrice() + this.#getTotalDiscount();
   }
 
   #getTotalDiscount() {

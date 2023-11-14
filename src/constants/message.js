@@ -1,4 +1,4 @@
-import { BENEFIT_LIST } from './options.js';
+import { UNIT, BENEFIT_LIST } from './options.js';
 
 export const ERROR_MESSAGE = {
   invalidDate: '[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.',
@@ -31,7 +31,7 @@ export const TEXT_FORMAT = {
   none: '없음',
   giftMenu: '샴페인 1개',
   orderMenu: (order) => `${order.menu} ${order.quantity}개`,
-  price: (price) => `${price}원`,
+  price: (price) => `${price.toLocaleString('ko-KR')}원`,
 };
 
 export const BENEFIT_MESSAGE = [
@@ -53,6 +53,9 @@ export const BENEFIT_MESSAGE = [
   },
   {
     benefit: BENEFIT_LIST.isChampagne,
-    text: (benefit) => `증정 이벤트: ${benefit ? TEXT_FORMAT.price(25000) : TEXT_FORMAT.none}`,
+    text: (benefit) =>
+      `증정 이벤트: ${
+        benefit ? TEXT_FORMAT.price(UNIT.champagneDiscountAmount) : TEXT_FORMAT.none
+      }`,
   },
 ];

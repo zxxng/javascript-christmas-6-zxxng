@@ -5,6 +5,7 @@ import OrderManager from './domain/OrderManager.js';
 import EventManager from './domain/EventManager.js';
 import BillManager from './domain/BillManager.js';
 import OutputView from './view/OutputView.js';
+import { UNIT } from './constants/options.js';
 
 class App {
   #menuManager;
@@ -49,10 +50,12 @@ class App {
   }
 
   #applyEventDiscount() {
-    this.#eventManager.calculateDiscount(this.#orderManager, this.#menuManager);
     this.#billManager = new BillManager(this.#orderManager, this.#eventManager, this.#menuManager);
-    this.#eventManager.canGetChampagne(this.#billManager.getTotalPrice());
-    this.#eventManager.canGetBadge(this.#billManager.getTotalBenefit());
+    if (this.#billManager.getTotalPrice(this.#orderManager.getOrderList()) >= UNIT.eventThreshold) {
+      this.#eventManager.calculateDiscount(this.#orderManager, this.#menuManager);
+      this.#eventManager.canGetChampagne(this.#billManager.getTotalPrice());
+      this.#eventManager.canGetBadge(this.#billManager.getTotalBenefit());
+    }
   }
 }
 

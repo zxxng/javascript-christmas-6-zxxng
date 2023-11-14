@@ -1,9 +1,11 @@
 export const UNIT = Object.freeze({
+  eventThreshold: 10000,
   champagneThreshold: 120000,
-  baseXmasDiscountAmount: 1000,
-  dailyXmasDiscountAmount: 100,
-  specialdayDiscountAmount: 1000,
-  decemberDiscountAmount: 2023,
+  champagneDiscountAmount: -25000,
+  baseXmasDiscountAmount: -1000,
+  dailyXmasDiscountAmount: -100,
+  specialdayDiscountAmount: -1000,
+  decemberDiscountAmount: -2023,
 });
 
 export const DATE = Object.freeze({

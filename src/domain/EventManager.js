@@ -48,7 +48,7 @@ class EventManager {
 
   #calculateSpecialdayDiscount() {
     if (DATE.specialDays.includes(this.date)) {
-      this.#benefitInfo.specialdayDiscount = 1000;
+      this.#benefitInfo.specialdayDiscount = UNIT.specialdayDiscountAmount;
     }
   }
 

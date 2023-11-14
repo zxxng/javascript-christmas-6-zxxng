@@ -17,7 +17,7 @@ describe('EventManager 클래스 테스트', () => {
     eventManager.calculateDiscount(mockOrderManager, mockMenuManager);
 
     const benefitInfo = eventManager.getBenefitInfo();
-    expect(benefitInfo.xmasDiscount).toBe(1400);
+    expect(benefitInfo.xmasDiscount).toBe(-1400);
   });
 
   test('특별일자 할인이 되는지 확인한다.', () => {
@@ -27,7 +27,7 @@ describe('EventManager 클래스 테스트', () => {
     eventManager.calculateDiscount(mockOrderManager, mockMenuManager);
 
     const benefitInfo = eventManager.getBenefitInfo();
-    expect(benefitInfo.specialdayDiscount).toBe(1000);
+    expect(benefitInfo.specialdayDiscount).toBe(-1000);
   });
 
   const menuList = [
@@ -46,7 +46,7 @@ describe('EventManager 클래스 테스트', () => {
     eventManager.calculateDiscount(mockOrderManager, mockMenuManager);
 
     const benefitInfo = eventManager.getBenefitInfo();
-    expect(benefitInfo.weekdayDiscount).toBe(4046);
+    expect(benefitInfo.weekdayDiscount).toBe(-4046);
     expect(benefitInfo.weekendDiscount).toBe(0);
   });
 
@@ -60,7 +60,7 @@ describe('EventManager 클래스 테스트', () => {
 
     const benefitInfo = eventManager.getBenefitInfo();
     expect(benefitInfo.weekdayDiscount).toBe(0);
-    expect(benefitInfo.weekendDiscount).toBe(4046);
+    expect(benefitInfo.weekendDiscount).toBe(-4046);
   });
 
   const date = 10;
