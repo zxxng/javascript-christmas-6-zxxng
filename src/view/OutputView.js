@@ -6,7 +6,6 @@ const OutputView = (() => {
     printFunctions.forEach((runFunction, index) => {
       Console.print(TITLE[index]);
       runFunction.call(this);
-      Console.print(COMMON.newLine);
     });
   };
 
