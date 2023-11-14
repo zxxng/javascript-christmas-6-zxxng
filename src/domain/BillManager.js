@@ -1,4 +1,5 @@
 import { UNIT } from '../constants/options.js';
+import { PROPERTY } from '../constants/options.js';
 
 class BillManager {
   #orderList;
@@ -14,7 +15,7 @@ class BillManager {
   getTotalPrice() {
     return this.#orderList.reduce(
       (total, order) =>
-        total + this.#menuManager.findProperty(order.menu, 'price') * order.quantity,
+        total + this.#menuManager.findProperty(order.menu, PROPERTY.price) * order.quantity,
       0
     );
   }

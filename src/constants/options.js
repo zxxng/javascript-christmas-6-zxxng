@@ -1,4 +1,5 @@
 export const UNIT = Object.freeze({
+  maximumQuantity: 20,
   eventThreshold: 10000,
   champagneThreshold: 120000,
   champagneDiscountAmount: -25000,
@@ -9,6 +10,8 @@ export const UNIT = Object.freeze({
 });
 
 export const DATE = Object.freeze({
+  minDate: 1,
+  maxDate: 31,
   xmas: 25,
   specialDays: [3, 10, 17, 24, 25, 31],
   thisYear: 2023,
@@ -29,4 +32,9 @@ export const BENEFIT_LIST = Object.freeze({
   weekendDiscount: 'weekendDiscount',
   isChampagne: 'isChampagne',
   badge: 'badge',
+});
+
+export const PROPERTY = Object.freeze({
+  type: 'type',
+  price: 'price',
 });

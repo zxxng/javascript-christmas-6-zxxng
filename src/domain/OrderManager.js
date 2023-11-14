@@ -1,5 +1,6 @@
 import { ERROR_MESSAGE } from '../constants/message.js';
 import { MENU_TYPE } from '../constants/menu.js';
+import { UNIT, PROPERTY } from '../constants/options.js';
 
 class OrderManager {
   #orderList;
@@ -31,7 +32,7 @@ class OrderManager {
 
   #isMenuWithinMaxLimit() {
     const totalQuantity = this.#orderList.reduce((total, order) => total + order.quantity, 0);
-    if (totalQuantity > 20) {
+    if (totalQuantity > UNIT.maximumQuantity) {
       throw new Error(ERROR_MESSAGE.invalidOrder);
     }
   }
@@ -53,7 +54,7 @@ class OrderManager {
   #hasOnlyBeverages() {
     let isBeverage = true;
     this.#orderList.forEach((order) => {
-      if (this.#menuManager.findProperty(order.menu, 'type') !== MENU_TYPE.beverage) {
+      if (this.#menuManager.findProperty(order.menu, PROPERTY.type) !== MENU_TYPE.beverage) {
         isBeverage = false;
       }
     });

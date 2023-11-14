@@ -1,5 +1,6 @@
 import { Console } from '@woowacourse/mission-utils';
 import { WOOTECO_MESSAGE, INPUT_MESSAGE, ERROR_MESSAGE } from '../constants/message.js';
+import { DATE } from '../constants/options.js';
 import REGEXS from '../constants/regexs.js';
 
 const InputView = {
@@ -15,7 +16,7 @@ const InputView = {
     if (!REGEXS.number.test(dateInput)) {
       throw new Error(ERROR_MESSAGE.invalidDate);
     }
-    if (Number(dateInput) < 1 || Number(dateInput) > 31) {
+    if (Number(dateInput) < DATE.minDate || Number(dateInput) > DATE.maxDate) {
       throw new Error(ERROR_MESSAGE.invalidDate);
     }
   },

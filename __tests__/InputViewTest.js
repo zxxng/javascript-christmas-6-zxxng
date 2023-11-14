@@ -24,9 +24,10 @@ describe('InputView 테스트', () => {
     '타파스-1, 초코케이크-2, 제로콜라-1',
     '티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1',
   ];
+  const date = 10;
   test.each(validOrder)('order가 유효할 때 값을 반환하는지 확인한다.', async (order) => {
     mockQuestions(order);
-    expect(await InputView.readOrder()).toEqual(order.split(REGEXS.commaAndOptionalSpace));
+    expect(await InputView.readOrder(date)).toEqual(order.split(REGEXS.commaAndOptionalSpace));
   });
 
   const invalidOrder = [

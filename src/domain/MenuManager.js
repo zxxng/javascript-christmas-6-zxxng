@@ -1,4 +1,5 @@
 import { MENU_LIST } from '../constants/menu.js';
+import { PROPERTY } from '../constants/options.js';
 
 class MenuManager {
   #menuList;
@@ -36,7 +37,7 @@ class MenuManager {
   countMenuType(orderList, type) {
     return orderList.reduce(
       (count, order) =>
-        this.findProperty(order.menu, 'type') === type ? count + order.quantity : count,
+        this.findProperty(order.menu, PROPERTY.type) === type ? count + order.quantity : count,
       0
     );
   }
