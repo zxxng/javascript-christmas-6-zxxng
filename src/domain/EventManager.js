@@ -3,6 +3,7 @@ import { MENU_TYPE } from '../constants/menu.js';
 
 class EventManager {
   #benefitInfo;
+  #date;
 
   constructor(date) {
     this.#benefitInfo = {
@@ -13,7 +14,7 @@ class EventManager {
       isChampagne: false,
       badge: '',
     };
-    this.date = date;
+    this.#date = date;
   }
 
   getBenefitInfo() {
@@ -40,14 +41,14 @@ class EventManager {
   }
 
   #calculateXmasDiscount() {
-    if (this.date <= DATE.xmas) {
+    if (this.#date <= DATE.xmas) {
       this.#benefitInfo.xmasDiscount =
-        UNIT.baseXmasDiscountAmount + (this.date - 1) * UNIT.dailyXmasDiscountAmount;
+        UNIT.baseXmasDiscountAmount + (this.#date - 1) * UNIT.dailyXmasDiscountAmount;
     }
   }
 
   #calculateSpecialdayDiscount() {
-    if (DATE.specialDays.includes(this.date)) {
+    if (DATE.specialDays.includes(this.#date)) {
       this.#benefitInfo.specialdayDiscount = UNIT.specialdayDiscountAmount;
     }
   }
@@ -62,7 +63,7 @@ class EventManager {
   }
 
   #getDayOfWeek() {
-    return new Date(DATE.thisYear, DATE.thisMonth, this.date).getDay();
+    return new Date(DATE.thisYear, DATE.thisMonth, this.#date).getDay();
   }
 }
 

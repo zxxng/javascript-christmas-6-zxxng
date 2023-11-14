@@ -1,47 +1,31 @@
 import { Console } from '@woowacourse/mission-utils';
 import { TITLE_MESSAGE, BENEFIT_MESSAGE, TEXT_FORMAT } from '../constants/message.js';
 
-const OutputView = {
-  printMenu(orderManager, eventManager, billManager) {
-    this.orderList = orderManager.getOrderList();
-    this.benefitInfo = eventManager.getBenefitInfo();
-    this.billManager = billManager;
-
-    this.printAll([
-      this.printOrderMenu,
-      this.printBeforeTotalPrice,
-      this.printGiftMenu,
-      this.printBenefitList,
-      this.printTotalDiscount,
-      this.printEstimatedPayment,
-      this.printEventBadge,
-    ]);
-  },
-
-  printAll(printFunctions) {
+const OutputView = (() => {
+  const printAll = function (printFunctions) {
     printFunctions.forEach((runFunction, index) => {
       Console.print(TITLE_MESSAGE[index]);
       runFunction.call(this);
       Console.print(TEXT_FORMAT.newLine);
     });
-  },
+  };
 
-  printOrderMenu() {
+  const printOrderMenu = function () {
     this.orderList.forEach((order) => {
       Console.print(TEXT_FORMAT.orderMenu(order));
     });
-  },
+  };
 
-  printBeforeTotalPrice() {
+  const printBeforeTotalPrice = function () {
     const totalPrice = this.billManager.getTotalPrice();
     Console.print(TEXT_FORMAT.price(totalPrice));
-  },
+  };
 
-  printGiftMenu() {
+  const printGiftMenu = function () {
     Console.print(this.benefitInfo.isChampagne ? TEXT_FORMAT.giftMenu : TEXT_FORMAT.none);
-  },
+  };
 
-  printBenefitList() {
+  const printBenefitList = function () {
     const benefitsToPrint = BENEFIT_MESSAGE.filter(
       ({ benefit }) => this.benefitInfo[benefit] && this.benefitInfo[benefit] !== 0
     );
@@ -50,21 +34,39 @@ const OutputView = {
           Console.print(text(this.benefitInfo[benefit]))
         )
       : Console.print(TEXT_FORMAT.none);
-  },
+  };
 
-  printTotalDiscount() {
+  const printTotalDiscount = function () {
     const totalDiscount = this.billManager.getTotalBenefit();
     Console.print(totalDiscount ? TEXT_FORMAT.price(totalDiscount) : TEXT_FORMAT.none);
-  },
+  };
 
-  printEstimatedPayment() {
+  const printEstimatedPayment = function () {
     const estimatedPayment = this.billManager.getEstimatedPayment();
     Console.print(TEXT_FORMAT.price(estimatedPayment));
-  },
+  };
 
-  printEventBadge() {
+  const printEventBadge = function () {
     Console.print(this.benefitInfo.badge ? this.benefitInfo.badge : TEXT_FORMAT.none);
-  },
-};
+  };
+
+  return {
+    printMenu(orderManager, eventManager, billManager) {
+      this.orderList = orderManager.getOrderList();
+      this.benefitInfo = eventManager.getBenefitInfo();
+      this.billManager = billManager;
+
+      printAll.call(this, [
+        printOrderMenu,
+        printBeforeTotalPrice,
+        printGiftMenu,
+        printBenefitList,
+        printTotalDiscount,
+        printEstimatedPayment,
+        printEventBadge,
+      ]);
+    },
+  };
+})();
 
 export default OutputView;
