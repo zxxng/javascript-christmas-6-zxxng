@@ -1,4 +1,4 @@
-import { BENEFIT_LIST } from './options';
+import { BENEFIT_LIST } from './options.js';
 
 export const ERROR_MESSAGE = {
   invalidDate: '[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.',
@@ -16,17 +16,18 @@ export const INPUT_MESSAGE = {
     '주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)\n',
 };
 
-export const TITLE_MESSAGE = {
-  orderMenu: '<주문 메뉴>',
-  beforeTotalPrice: '<할인 전 총주문 금액>',
-  giftMenu: '<증정 메뉴>',
-  benefitList: '<혜택 내역>',
-  totalDiscount: '<총혜택 금액>',
-  estimatedPayment: '<할인 후 예상 결제 금액>',
-  eventBadge: '<12월 이벤트 배지>',
-};
+export const TITLE_MESSAGE = [
+  '<주문 메뉴>',
+  '<할인 전 총주문 금액>',
+  '<증정 메뉴>',
+  '<혜택 내역>',
+  '<총혜택 금액>',
+  '<할인 후 예상 결제 금액>',
+  '<12월 이벤트 배지>',
+];
 
 export const TEXT_FORMAT = {
+  newLine: '',
   none: '없음',
   giftMenu: '샴페인 1개',
   orderMenu: (order) => `${order.menu} ${order.quantity}개`,
