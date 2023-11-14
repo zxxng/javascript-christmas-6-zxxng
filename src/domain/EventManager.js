@@ -1,4 +1,4 @@
-import { UNIT, DATE, BADGES } from '../constants/options.js';
+import { UNIT, DATE, BADGES, BENEFIT_LIST } from '../constants/options.js';
 import { MENU_TYPE } from '../constants/menu.js';
 
 class EventManager {
@@ -54,15 +54,11 @@ class EventManager {
 
   #calculateDecemberDiscount(orderManager, menuManager) {
     const orderList = orderManager.getOrderList();
-    if (DATE.isWeekday(this.#getDayOfWeek())) {
-      const count = menuManager.countMenuType(orderList, MENU_TYPE.dessert);
-      this.#benefitInfo.weekdayDiscount = count * UNIT.decemberDiscountAmount;
-
-      return;
-    }
-
-    const count = menuManager.countMenuType(orderList, MENU_TYPE.main);
-    this.#benefitInfo.weekendDiscount = count * UNIT.decemberDiscountAmount;
+    const discountTarget = DATE.isWeekday(this.#getDayOfWeek())
+      ? [BENEFIT_LIST.weekdayDiscount, MENU_TYPE.dessert]
+      : [BENEFIT_LIST.weekendDiscount, MENU_TYPE.main];
+    const count = menuManager.countMenuType(orderList, discountTarget[1]);
+    this.#benefitInfo[discountTarget[0]] = count * UNIT.decemberDiscountAmount;
   }
 
   #getDayOfWeek() {

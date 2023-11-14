@@ -19,3 +19,12 @@ export const BADGES = Object.freeze([
   { min: 10000, badge: '트리' },
   { min: 5000, badge: '별' },
 ]);
+
+export const BENEFIT_LIST = Object.freeze({
+  xmasDiscount: 'xmasDiscount',
+  specialdayDiscount: 'specialdayDiscount',
+  weekdayDiscount: 'weekdayDiscount',
+  weekendDiscount: 'weekendDiscount',
+  isChampagne: 'isChampagne',
+  badge: 'badge',
+});

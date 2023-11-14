@@ -1,3 +1,5 @@
+import { BENEFIT_LIST } from './options';
+
 export const ERROR_MESSAGE = {
   invalidDate: '[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.',
   invalidOrder: '[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.',
@@ -23,7 +25,8 @@ export const TITLE_MESSAGE = {
   estimatedPayment: '<할인 후 예상 결제 금액>',
   eventBadge: '<12월 이벤트 배지>',
 };
-export const OUTPUT_FORMAT = {
+
+export const TEXT_FORMAT = {
   none: '없음',
   giftMenu: '샴페인 1개',
   orderMenu: (order) => `${order.menu} ${order.quantity}개`,
@@ -32,17 +35,23 @@ export const OUTPUT_FORMAT = {
 
 export const BENEFIT_MESSAGE = [
   {
-    benefit: 'xmasDiscount',
-    text: (benefit) => `크리스마스 디데이 할인: ${OUTPUT_FORMAT.price(benefit)}`,
-  },
-  { benefit: 'weekdayDiscount', text: (benefit) => `평일 할인: ${OUTPUT_FORMAT.price(benefit)}` },
-  { benefit: 'weekendDiscount', text: (benefit) => `주말 할인: ${OUTPUT_FORMAT.price(benefit)}` },
-  {
-    benefit: 'specialdayDiscount',
-    text: (benefit) => `특별 할인: ${OUTPUT_FORMAT.price(benefit)}`,
+    benefit: BENEFIT_LIST.xmasDiscount,
+    text: (benefit) => `크리스마스 디데이 할인: ${TEXT_FORMAT.price(benefit)}`,
   },
   {
-    benefit: 'isChampagne',
-    text: (benefit) => `증정 이벤트: ${benefit ? OUTPUT_FORMAT.price(25000) : OUTPUT_FORMAT.none}`,
+    benefit: BENEFIT_LIST.weekdayDiscount,
+    text: (benefit) => `평일 할인: ${TEXT_FORMAT.price(benefit)}`,
+  },
+  {
+    benefit: BENEFIT_LIST.weekendDiscount,
+    text: (benefit) => `주말 할인: ${TEXT_FORMAT.price(benefit)}`,
+  },
+  {
+    benefit: BENEFIT_LIST.specialdayDiscount,
+    text: (benefit) => `특별 할인: ${TEXT_FORMAT.price(benefit)}`,
+  },
+  {
+    benefit: BENEFIT_LIST.isChampagne,
+    text: (benefit) => `증정 이벤트: ${benefit ? TEXT_FORMAT.price(25000) : TEXT_FORMAT.none}`,
   },
 ];
