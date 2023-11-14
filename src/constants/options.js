@@ -20,9 +20,9 @@ export const DATE = Object.freeze({
 });
 
 export const BADGES = Object.freeze([
-  { min: 20000, badge: '산타' },
-  { min: 10000, badge: '트리' },
-  { min: 5000, badge: '별' },
+  { discountedAmount: -20000, badge: '산타' },
+  { discountedAmount: -10000, badge: '트리' },
+  { discountedAmount: -5000, badge: '별' },
 ]);
 
 export const BENEFIT_LIST = Object.freeze({

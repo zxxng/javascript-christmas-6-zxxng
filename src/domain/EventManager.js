@@ -28,7 +28,7 @@ class EventManager {
   }
 
   canGetBadge(totalDiscount) {
-    const badge = BADGES.find(({ min }) => totalDiscount >= min);
+    const badge = BADGES.find(({ discountedAmount }) => totalDiscount <= discountedAmount);
     if (badge) {
       this.#benefitInfo.badge = badge.badge;
     }

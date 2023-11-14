@@ -73,7 +73,7 @@ describe('EventManager 클래스 테스트', () => {
   });
 
   test('할인 금액에 따른 배지 증정이 되는지 확인한다.', () => {
-    eventManager.canGetBadge(20000);
+    eventManager.canGetBadge(-20000);
 
     const benefitInfo = eventManager.getBenefitInfo();
     expect(benefitInfo.badge).toBe('산타');

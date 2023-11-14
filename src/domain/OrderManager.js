@@ -1,4 +1,4 @@
-import { ERROR_MESSAGE } from '../constants/message.js';
+import { ERROR_MESSAGE } from '../constants/messages.js';
 import { MENU_TYPE } from '../constants/menu.js';
 import { UNIT, PROPERTY } from '../constants/options.js';
 

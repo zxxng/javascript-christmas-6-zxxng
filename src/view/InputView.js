@@ -1,5 +1,5 @@
 import { Console } from '@woowacourse/mission-utils';
-import { WOOTECO_MESSAGE, INPUT_MESSAGE, ERROR_MESSAGE } from '../constants/message.js';
+import { WOOTECO_MESSAGE, INPUT_MESSAGE, ERROR_MESSAGE } from '../constants/messages.js';
 import { DATE } from '../constants/options.js';
 import REGEXS from '../constants/regexs.js';
 

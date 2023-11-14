@@ -1,28 +1,28 @@
 import { Console } from '@woowacourse/mission-utils';
-import { TITLE_MESSAGE, BENEFIT_MESSAGE, TEXT_FORMAT } from '../constants/message.js';
+import { TITLE, GIFT_MENU, COMMON, BENEFIT_MESSAGE } from '../constants/orderDetails.js';
 
 const OutputView = (() => {
   const printAll = function (printFunctions) {
     printFunctions.forEach((runFunction, index) => {
-      Console.print(TITLE_MESSAGE[index]);
+      Console.print(TITLE[index]);
       runFunction.call(this);
-      Console.print(TEXT_FORMAT.newLine);
+      Console.print(COMMON.newLine);
     });
   };
 
   const printOrderMenu = function () {
     this.orderList.forEach((order) => {
-      Console.print(TEXT_FORMAT.orderMenu(order));
+      Console.print(COMMON.orderMenu(order));
     });
   };
 
   const printBeforeTotalPrice = function () {
     const totalPrice = this.billManager.getTotalPrice();
-    Console.print(TEXT_FORMAT.price(totalPrice));
+    Console.print(COMMON.price(totalPrice));
   };
 
   const printGiftMenu = function () {
-    Console.print(this.benefitInfo.isChampagne ? TEXT_FORMAT.giftMenu : TEXT_FORMAT.none);
+    Console.print(this.benefitInfo.isChampagne ? GIFT_MENU : COMMON.none);
   };
 
   const printBenefitList = function () {
@@ -33,21 +33,21 @@ const OutputView = (() => {
       ? benefitsToPrint.forEach(({ text, benefit }) =>
           Console.print(text(this.benefitInfo[benefit]))
         )
-      : Console.print(TEXT_FORMAT.none);
+      : Console.print(COMMON.none);
   };
 
   const printTotalDiscount = function () {
     const totalDiscount = this.billManager.getTotalBenefit();
-    Console.print(totalDiscount ? TEXT_FORMAT.price(totalDiscount) : TEXT_FORMAT.none);
+    Console.print(totalDiscount ? COMMON.price(totalDiscount) : COMMON.none);
   };
 
   const printEstimatedPayment = function () {
     const estimatedPayment = this.billManager.getEstimatedPayment();
-    Console.print(TEXT_FORMAT.price(estimatedPayment));
+    Console.print(COMMON.price(estimatedPayment));
   };
 
   const printEventBadge = function () {
-    Console.print(this.benefitInfo.badge ? this.benefitInfo.badge : TEXT_FORMAT.none);
+    Console.print(this.benefitInfo.badge ? this.benefitInfo.badge : COMMON.none);
   };
 
   return {
