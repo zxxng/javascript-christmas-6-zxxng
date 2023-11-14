@@ -6,9 +6,9 @@ const InputView = {
   async readDate() {
     Console.print(WOOTECO_MESSAGE.introduce);
     const input = await Console.readLineAsync(INPUT_MESSAGE.askReservationDate);
-    this.validateDateInput(input);
+    this.validateDateInput(input.trim());
 
-    return Number(input);
+    return Number(input.trim());
   },
 
   validateDateInput(dateInput) {
@@ -25,7 +25,7 @@ const InputView = {
     this.validateOrderInput(input);
     Console.print(WOOTECO_MESSAGE.benefitsPreview(date));
 
-    return input.split(REGEXS.commaAndOptionalSpace);
+    return input.trim().split(REGEXS.commaAndOptionalSpace);
   },
 
   validateOrderInput(orderInput) {
@@ -33,7 +33,7 @@ const InputView = {
       throw new Error(ERROR_MESSAGE.invalidOrder);
     }
 
-    const orderList = orderInput.split(REGEXS.commaAndOptionalSpace);
+    const orderList = orderInput.trim().split(REGEXS.commaAndOptionalSpace);
     orderList.forEach((order) => {
       const [menu, quantity] = order.split('-');
       if (!quantity || !REGEXS.number.test(quantity) || !Number(quantity)) {
