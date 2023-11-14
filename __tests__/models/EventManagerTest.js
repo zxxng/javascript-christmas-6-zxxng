@@ -1,4 +1,4 @@
-import EventManager from '../../src/domain/EventManager';
+import EventManager from '../../src/models/EventManager';
 
 const mockOrderManager = {
   getOrderList: jest.fn(),
@@ -7,6 +7,11 @@ const mockOrderManager = {
 
 const mockMenuManager = {
   countMenuType: jest.fn(),
+};
+
+const mockBillManager = {
+  getTotalPrice: jest.fn(),
+  getTotalBenefit: jest.fn(),
 };
 
 describe('EventManager 클래스 테스트', () => {
@@ -66,14 +71,16 @@ describe('EventManager 클래스 테스트', () => {
   const date = 10;
   const eventManager = new EventManager(date);
   test('샴페인 증정이 되는지 확인한다.', () => {
-    eventManager.canGetChampagne(120000);
+    mockBillManager.getTotalPrice.mockReturnValue(120000);
+    eventManager.canGetChampagne(mockBillManager);
 
     const benefitInfo = eventManager.getBenefitInfo();
     expect(benefitInfo.isChampagne).toBe(true);
   });
 
   test('할인 금액에 따른 배지 증정이 되는지 확인한다.', () => {
-    eventManager.canGetBadge(-20000);
+    mockBillManager.getTotalBenefit.mockReturnValue(-20000);
+    eventManager.canGetBadge(mockBillManager);
 
     const benefitInfo = eventManager.getBenefitInfo();
     expect(benefitInfo.badge).toBe('산타');

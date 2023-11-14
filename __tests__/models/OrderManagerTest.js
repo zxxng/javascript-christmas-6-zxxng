@@ -1,5 +1,5 @@
-import OrderManager from '../../src/domain/OrderManager';
-import MenuManager from '../../src/domain/MenuManager';
+import OrderManager from '../../src/models/OrderManager';
+import MenuManager from '../../src/models/MenuManager';
 
 const menuManager = new MenuManager();
 

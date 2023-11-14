@@ -21,14 +21,16 @@ class EventManager {
     return this.#benefitInfo;
   }
 
-  canGetChampagne(totalPrice) {
+  canGetChampagne(billManager) {
+    const totalPrice = billManager.getTotalPrice();
     if (totalPrice >= UNIT.champagneThreshold) {
       this.#benefitInfo.isChampagne = true;
     }
   }
 
-  canGetBadge(totalDiscount) {
-    const badge = BADGES.find(({ discountedAmount }) => totalDiscount <= discountedAmount);
+  canGetBadge(billManager) {
+    const totalBenefit = billManager.getTotalBenefit();
+    const badge = BADGES.find(({ discountedAmount }) => totalBenefit <= discountedAmount);
     if (badge) {
       this.#benefitInfo.badge = badge.badge;
     }

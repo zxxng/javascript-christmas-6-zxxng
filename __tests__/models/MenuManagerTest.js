@@ -1,4 +1,4 @@
-import MenuManager from '../../src/domain/MenuManager';
+import MenuManager from '../../src/models/MenuManager';
 
 describe('MenuManager 클래스 테스트', () => {
   const menuManager = new MenuManager();

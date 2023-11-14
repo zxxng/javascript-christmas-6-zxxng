@@ -10,13 +10,13 @@ const OutputView = (() => {
     });
   };
 
-  const printOrderMenu = function () {
+  const printMenu = function () {
     this.orderList.forEach((order) => {
       Console.print(COMMON.orderMenu(order));
     });
   };
 
-  const printBeforeTotalPrice = function () {
+  const printTotalPrice = function () {
     const totalPrice = this.billManager.getTotalPrice();
     Console.print(COMMON.price(totalPrice));
   };
@@ -25,7 +25,7 @@ const OutputView = (() => {
     Console.print(this.benefitInfo.isChampagne ? GIFT_MENU : COMMON.none);
   };
 
-  const printBenefitList = function () {
+  const printBenefit = function () {
     const benefitsToPrint = BENEFIT_MESSAGE.filter(
       ({ benefit }) => this.benefitInfo[benefit] && this.benefitInfo[benefit] !== 0
     );
@@ -51,16 +51,16 @@ const OutputView = (() => {
   };
 
   return {
-    printMenu(orderManager, eventManager, billManager) {
+    printResult(orderManager, eventManager, billManager) {
       this.orderList = orderManager.getOrderList();
       this.benefitInfo = eventManager.getBenefitInfo();
       this.billManager = billManager;
 
       printAll.call(this, [
-        printOrderMenu,
-        printBeforeTotalPrice,
+        printMenu,
+        printTotalPrice,
         printGiftMenu,
-        printBenefitList,
+        printBenefit,
         printTotalDiscount,
         printEstimatedPayment,
         printEventBadge,

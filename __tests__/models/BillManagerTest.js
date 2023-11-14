@@ -1,4 +1,4 @@
-import BillManager from '../../src/domain/BillManager';
+import BillManager from '../../src/models/BillManager';
 
 const mockOrderManager = {
   getOrderList: jest.fn(),
