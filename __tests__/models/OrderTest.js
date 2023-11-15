@@ -16,7 +16,7 @@ describe('Order 클래스 테스트', () => {
   orderList.map((order, index) => {
     test(`메뉴와 수량으로 구분된 객체로 반환되는지 확인한다. - ${order[0]}`, () => {
       const newOrder = new Order(order);
-      expect(newOrder.getOrderDetail()).toEqual(orderResult[index]);
+      expect(newOrder.getOrderMenu()).toEqual(orderResult[index]);
     });
   });
 

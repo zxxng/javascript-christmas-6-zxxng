@@ -9,8 +9,8 @@ const mockEventManager = {
   getTotalBenefit: jest.fn(),
 };
 
-const mockOrder = {
-  getOrderDetail: jest.fn(),
+const mockOrderMenu = {
+  getOrderMenu: jest.fn(),
 };
 
 let eventManager;
@@ -41,8 +41,8 @@ describe('EventManager 클래스 할인 적용 테스트', () => {
     eventManager = new EventManager(11);
     mockOrderManager.filterItemsByProperty.mockReturnValue([
       {
-        ...mockOrder,
-        getOrderDetail: jest.fn().mockReturnValue({
+        ...mockOrderMenu,
+        getOrderMenu: jest.fn().mockReturnValue({
           name: '초코케이크',
           quantity: 2,
           price: 15000,
@@ -59,8 +59,8 @@ describe('EventManager 클래스 할인 적용 테스트', () => {
     eventManager = new EventManager(15);
     mockOrderManager.filterItemsByProperty.mockReturnValue([
       {
-        ...mockOrder,
-        getOrderDetail: jest.fn().mockReturnValue({
+        ...mockOrderMenu,
+        getOrderMenu: jest.fn().mockReturnValue({
           name: '티본스테이크',
           quantity: 1,
           price: 55000,
@@ -68,8 +68,8 @@ describe('EventManager 클래스 할인 적용 테스트', () => {
         }),
       },
       {
-        ...mockOrder,
-        getOrderDetail: jest.fn().mockReturnValue({
+        ...mockOrderMenu,
+        getOrderMenu: jest.fn().mockReturnValue({
           name: '바비큐립',
           quantity: 1,
           price: 54000,

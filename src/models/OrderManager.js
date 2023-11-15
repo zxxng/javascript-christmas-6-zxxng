@@ -16,8 +16,8 @@ class OrderManager {
 
   getTotalPrice() {
     return this.#orderList.reduce((total, order) => {
-      const orderDetail = order.getOrderDetail();
-      return total + orderDetail.price * orderDetail.quantity;
+      const orderMenu = order.getOrderMenu();
+      return total + orderMenu.price * orderMenu.quantity;
     }, 0);
   }
 
@@ -26,14 +26,14 @@ class OrderManager {
   }
 
   /**
-   * 주어진 속성으로 주문을 필터링합니다. propertyValue가 주어지지 않으면 해당 속성의 모든 값을 반환합니다.
+   * 주어진 속성에 propertyValue가 있으면 해당 객체를 반환합니다.
    * @param {string} property
    * @param {string} propertyValue
    */
   filterItemsByProperty(property, propertyValue = '') {
     return this.#orderList.filter((order) => {
-      const orderDetail = order.getOrderDetail();
-      return orderDetail[property] === propertyValue;
+      const orderMenu = order.getOrderMenu();
+      return orderMenu[property] === propertyValue;
     });
   }
 
@@ -51,8 +51,8 @@ class OrderManager {
 
   #isMenuWithinMaxLimit() {
     const totalQuantity = this.#orderList.reduce((total, order) => {
-      const orderDetail = order.getOrderDetail();
-      return total + orderDetail.quantity;
+      const orderMenu = order.getOrderMenu();
+      return total + orderMenu.quantity;
     }, 0);
     if (totalQuantity > UNIT.maximumQuantity) {
       throw new Error(ERROR_MESSAGE.invalidOrder);
@@ -61,8 +61,8 @@ class OrderManager {
 
   #hasDuplicateMenu() {
     const orderNames = this.#orderList.map((menu) => {
-      const orderDetail = menu.getOrderDetail();
-      return orderDetail.name;
+      const orderMenu = menu.getOrderMenu();
+      return orderMenu.name;
     });
     if (orderNames.length !== new Set(orderNames).size) {
       throw new Error(ERROR_MESSAGE.invalidOrder);

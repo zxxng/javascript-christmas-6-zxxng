@@ -3,23 +3,23 @@ import { MENU_LIST } from '../constants/menu.js';
 import REGEXS from '../constants/regexs.js';
 
 class Order {
-  #orderDetail;
+  #orderMenu;
 
   constructor([name, quantity]) {
-    this.#orderDetail = { name, quantity };
+    this.#orderMenu = { name, quantity };
     this.#validateOrder();
-    this.#convertToItemObject(this.#orderDetail);
+    this.#convertToItemObject(this.#orderMenu);
   }
 
-  getOrderDetail() {
-    return this.#orderDetail;
+  getOrderMenu() {
+    return this.#orderMenu;
   }
 
   #convertToItemObject({ name, quantity }) {
     const menuCategory = MENU_LIST.find((category) => {
       return Object.values(category)[0].hasOwnProperty(name);
     });
-    this.#orderDetail = {
+    this.#orderMenu = {
       name,
       quantity: Number(quantity),
       price: Object.values(menuCategory)[0][name],
@@ -36,13 +36,13 @@ class Order {
     const menuNames = MENU_LIST.flatMap((category) =>
       Object.values(category).flatMap((menuObject) => Object.keys(menuObject))
     );
-    if (!menuNames.includes(this.#orderDetail.name)) {
+    if (!menuNames.includes(this.#orderMenu.name)) {
       throw new Error(ERROR_MESSAGE.invalidOrder);
     }
   }
 
   #validateQuantity() {
-    if (this.#isInvalidQuantity(this.#orderDetail.quantity)) {
+    if (this.#isInvalidQuantity(this.#orderMenu.quantity)) {
       throw new Error(ERROR_MESSAGE.invalidOrder);
     }
   }

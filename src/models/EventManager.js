@@ -57,14 +57,17 @@ class EventManager {
     const [discountDay, discountCategory] = DATE.isWeekday(this.#getDayOfWeek())
       ? [BENEFIT_LIST.weekdayDiscount, 'dessert']
       : [BENEFIT_LIST.weekendDiscount, 'main'];
-
-    const disertList = orderManager.filterItemsByProperty('category', discountCategory);
-    const totalQuantity = disertList.reduce((sum, item) => {
-      const orderDetail = item.getOrderDetail();
-      return sum + orderDetail.quantity;
-    }, 0);
-
+    const totalQuantity = this.#calculateDiscountTotalQuantity(discountCategory, orderManager);
     this.#benefitInfo[discountDay] = totalQuantity * UNIT.decemberDiscountAmount;
+  }
+
+  #calculateDiscountTotalQuantity(discountCategory, orderManager) {
+    const discountCategoryList = orderManager.filterItemsByProperty('category', discountCategory);
+
+    return discountCategoryList.reduce((sum, item) => {
+      const orderMenu = item.getOrderMenu();
+      return sum + orderMenu.quantity;
+    }, 0);
   }
 
   #canGetChampagne(orderManager) {
@@ -79,6 +82,7 @@ class EventManager {
     const badge = BADGES.find(({ discountedAmount }) => {
       return totalBenefit <= discountedAmount;
     });
+
     if (badge) {
       this.#benefitInfo.badge = badge.badge;
     }
