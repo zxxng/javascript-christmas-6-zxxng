@@ -1,12 +1,31 @@
 import Order from '../../src/models/Order';
 import OrderManager from '../../src/models/OrderManager';
+import { MAIN, DESSERT, BEVERAGE } from '../../src/constants/menu';
 
-describe('OrderList 클래스 테스트', () => {
+const mockEventManager = {
+  getTotalDiscount: jest.fn(),
+};
+
+describe('OrderManager 클래스 테스트', () => {
   const orderInput = ['티본스테이크-1', '바비큐립-1', '초코케이크-2', '제로콜라-1'];
   const orderList = new OrderManager(orderInput);
   test('OrderDetail 객체 배열로 반환되는지 확인한다.', () => {
     const result = orderList.getOrderList();
     expect(result.every((order) => order instanceof Order)).toBeTruthy();
+  });
+
+  test('주문 목록의 총 가격을 계산한다.', () => {
+    const expectedTotalPrice =
+      MAIN.티본스테이크 + MAIN.바비큐립 + DESSERT.초코케이크 * 2 + BEVERAGE.제로콜라;
+    expect(orderList.getTotalPrice()).toBe(expectedTotalPrice);
+  });
+
+  test('할인 후 예상 결제금액을 계산한다.', () => {
+    const totalDiscount = -20000;
+    mockEventManager.getTotalDiscount.mockReturnValue(totalDiscount);
+
+    const expectedPayment = orderList.getTotalPrice() + totalDiscount;
+    expect(orderList.getEstimatedPayment(mockEventManager)).toBe(expectedPayment);
   });
 
   test('메뉴를 한 번에 20개 넘게 주문하면 예외가 발생한다.', () => {
