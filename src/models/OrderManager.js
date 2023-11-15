@@ -1,65 +1,65 @@
+import Order from './Order';
 import { ERROR_MESSAGE } from '../constants/messages.js';
-import { CATEGORY } from '../constants/menu.js';
-import { UNIT, PROPERTY } from '../constants/options.js';
+import { UNIT } from '../constants/options.js';
 
 class OrderManager {
   #orderList;
-  #menuManager;
 
-  constructor(order, menuManager) {
-    this.#menuManager = menuManager;
-    this.#orderList = this.#parseOrder(order);
-    this.#validateOrder();
+  constructor(orderInput) {
+    this.#orderList = this.#createOrder(orderInput);
+    this.#validateOrderList();
   }
 
   getOrderList() {
     return this.#orderList;
   }
 
-  #parseOrder(order) {
-    return order.map((item) => {
-      const [menu, quantity] = item.split('-');
-      return { menu: menu, quantity: Number(quantity) };
+  /**
+   * 주어진 속성으로 주문을 필터링합니다. propertyValue가 주어지지 않으면 해당 속성의 모든 값을 반환합니다.
+   * @param {string} property
+   * @param {string} propertyValue
+   */
+  filterItemsByProperty(property, propertyValue = '') {
+    const propertyValues = this.#orderList.map((order) => {
+      const orderDetail = order.getOrderDetail();
+      return orderDetail[property];
+    });
+
+    return propertyValues.filter((value) => value.includes(propertyValue));
+  }
+
+  #createOrder(orderInput) {
+    return orderInput.map((item) => {
+      return new Order(item.split('-'));
     });
   }
 
-  #validateOrder() {
+  #validateOrderList() {
     this.#isMenuWithinMaxLimit();
-    this.#containsInvalidMenuName();
     this.#hasDuplicateMenu();
     this.#hasOnlyBeverages();
   }
 
   #isMenuWithinMaxLimit() {
-    const totalQuantity = this.#orderList.reduce((total, order) => total + order.quantity, 0);
+    const totalQuantity = this.#orderList.reduce((total, order) => {
+      const orderDetail = order.getOrderDetail();
+      return total + orderDetail.quantity;
+    }, 0);
     if (totalQuantity > UNIT.maximumQuantity) {
       throw new Error(ERROR_MESSAGE.invalidOrder);
     }
   }
 
-  #containsInvalidMenuName() {
-    const menuNames = this.#menuManager.getMenuList().map((menu) => menu.name);
-    if (this.#orderList.some((order) => !menuNames.includes(order.menu))) {
-      throw new Error(ERROR_MESSAGE.invalidOrder);
-    }
-  }
-
   #hasDuplicateMenu() {
-    const orderMenus = this.#orderList.map((order) => order.menu);
-    if (orderMenus.length !== new Set(orderMenus).size) {
+    const orderNames = this.filterItemsByProperty('name');
+    if (orderNames.length !== new Set(orderNames).size) {
       throw new Error(ERROR_MESSAGE.invalidOrder);
     }
   }
 
   #hasOnlyBeverages() {
-    let isBeverage = true;
-    this.#orderList.forEach((order) => {
-      if (this.#menuManager.findProperty(order.menu, PROPERTY.category) !== CATEGORY.beverage) {
-        isBeverage = false;
-      }
-    });
-
-    if (isBeverage) {
+    const beverageQuantity = this.filterItemsByProperty('category', 'beverage').length;
+    if (this.#orderList.length === beverageQuantity) {
       throw new Error(ERROR_MESSAGE.invalidOrder);
     }
   }
