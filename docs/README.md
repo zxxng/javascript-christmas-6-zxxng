@@ -7,7 +7,7 @@
 
 ### 크리스마스 프로모션 미리 보기
 
-<img src='./images/christmas-promotion-example.gif' alt='christmas-promotion-example.gif' width=500>
+<img src='./images/christmas-promotion-example.gif' alt='christmas-promotion-example.gif' width=700>
 
 ## 🛠️ 기능 구현 목록
 
@@ -85,4 +85,4 @@
 
 ## 🔍 프로젝트 실행 구조
 
-<img src='./images/project_execution_structure.png' alt='project_execution_structure' width=600>
+<img src='./images/project_execution_structure.png' alt='project_execution_structure' width=700>
