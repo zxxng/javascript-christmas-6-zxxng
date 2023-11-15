@@ -14,7 +14,7 @@ export const GIFT_MENU = '샴페인 1개';
 
 export const COMMON = Object.freeze({
   none: '없음',
-  orderMenu: (order) => `${order.menu} ${order.quantity}개`,
+  orderMenu: (order) => `${order.name} ${order.quantity}개`,
   price: (price) => `${price.toLocaleString('ko-KR')}원`,
 });
 

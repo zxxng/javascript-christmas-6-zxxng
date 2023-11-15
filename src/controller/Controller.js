@@ -20,7 +20,7 @@ class Controller {
     await this.#receiveDateInput();
     await this.#receiveOrderInput();
     this.#applyEventDiscount();
-    // this.#printOrderDetails();
+    this.#printOrderDetails();
   }
 
   async #receiveDateInput() {
@@ -43,9 +43,9 @@ class Controller {
     }
   }
 
-  // #printOrderDetails() {
-  //   OutputView.printResult(this.#orderManager, this.#eventManager);
-  // }
+  #printOrderDetails() {
+    OutputView.printResult(this.#orderManager, this.#eventManager);
+  }
 
   async #tryCatchHandler(asyncFn) {
     try {
