@@ -9,16 +9,6 @@ const OutputView = (() => {
     });
   };
 
-  const printFunctions = [
-    printMenu,
-    printTotalPrice,
-    printGiftMenu,
-    printBenefit,
-    printTotalBenefit,
-    printEstimatedPayment,
-    printEventBadge,
-  ];
-
   const printMenu = function () {
     this.orderManager.getOrderList().forEach((order) => {
       const orderMenu = order.getOrderMenu();
@@ -56,6 +46,16 @@ const OutputView = (() => {
   const printEventBadge = function () {
     Console.print(this.benefitInfo.badge ? this.benefitInfo.badge : COMMON.none);
   };
+
+  const printFunctions = [
+    printMenu,
+    printTotalPrice,
+    printGiftMenu,
+    printBenefit,
+    printTotalBenefit,
+    printEstimatedPayment,
+    printEventBadge,
+  ];
 
   return {
     printResult(orderManager, eventManager) {
