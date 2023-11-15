@@ -25,15 +25,10 @@ const InputView = (() => {
 
     const orderList = orderInput.split(REGEXS.commaAndOptionalSpace);
     orderList.forEach((order) => {
-      const [menu, quantity] = order.split('-');
-      if (isInvalidQuantity(quantity)) {
+      if (order.split('-').length !== 2) {
         throw new Error(ERROR_MESSAGE.invalidOrder);
       }
     });
-  };
-
-  const isInvalidQuantity = function (quantity) {
-    return !quantity || !REGEXS.number.test(quantity) || !Number(quantity);
   };
 
   const trimReadLineAsync = async function (promptMessage) {
