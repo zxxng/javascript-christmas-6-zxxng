@@ -31,12 +31,10 @@ class OrderManager {
    * @param {string} propertyValue
    */
   filterItemsByProperty(property, propertyValue = '') {
-    const propertyValues = this.#orderList.map((order) => {
+    return this.#orderList.filter((order) => {
       const orderDetail = order.getOrderDetail();
-      return orderDetail[property];
+      return orderDetail[property] === propertyValue;
     });
-
-    return propertyValues.filter((value) => value.includes(propertyValue));
   }
 
   #createOrder(orderInput) {
@@ -62,7 +60,10 @@ class OrderManager {
   }
 
   #hasDuplicateMenu() {
-    const orderNames = this.filterItemsByProperty('name');
+    const orderNames = this.#orderList.map((menu) => {
+      const orderDetail = menu.getOrderDetail();
+      return orderDetail.name;
+    });
     if (orderNames.length !== new Set(orderNames).size) {
       throw new Error(ERROR_MESSAGE.invalidOrder);
     }

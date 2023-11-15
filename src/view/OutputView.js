@@ -35,10 +35,10 @@ const OutputView = (() => {
         )
       : Console.print(COMMON.none);
   };
-  //
+
   const printTotalDiscount = function () {
     const totalDiscount = this.eventManager.getTotalBenefit();
-    Console.print(totalDiscount ? COMMON.price(totalDiscount) : COMMON.none);
+    Console.print(COMMON.price(totalDiscount));
   };
 
   const printEstimatedPayment = function () {

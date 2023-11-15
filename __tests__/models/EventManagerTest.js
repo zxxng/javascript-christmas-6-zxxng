@@ -9,6 +9,10 @@ const mockEventManager = {
   getTotalBenefit: jest.fn(),
 };
 
+const mockOrder = {
+  getOrderDetail: jest.fn(),
+};
+
 let eventManager;
 
 describe('EventManager 클래스 할인 적용 테스트', () => {
@@ -35,18 +39,47 @@ describe('EventManager 클래스 할인 적용 테스트', () => {
 
   test('평일 할인이 되는지 확인한다.', () => {
     eventManager = new EventManager(11);
-    mockOrderManager.filterItemsByProperty.mockReturnValue(['dessert']);
+    mockOrderManager.filterItemsByProperty.mockReturnValue([
+      {
+        ...mockOrder,
+        getOrderDetail: jest.fn().mockReturnValue({
+          name: '초코케이크',
+          quantity: 2,
+          price: 15000,
+          category: 'dessert',
+        }),
+      },
+    ]);
     eventManager.calculateDiscountAndBenefit(mockOrderManager);
     const benefitInfo = eventManager.getBenefitInfo();
-    expect(benefitInfo.weekdayDiscount).toBe(-2023);
+    expect(benefitInfo.weekdayDiscount).toBe(-4046);
   });
 
   test('주말 할인이 되는지 확인한다.', () => {
     eventManager = new EventManager(15);
-    mockOrderManager.filterItemsByProperty.mockReturnValue(['main']);
+    mockOrderManager.filterItemsByProperty.mockReturnValue([
+      {
+        ...mockOrder,
+        getOrderDetail: jest.fn().mockReturnValue({
+          name: '티본스테이크',
+          quantity: 1,
+          price: 55000,
+          category: 'main',
+        }),
+      },
+      {
+        ...mockOrder,
+        getOrderDetail: jest.fn().mockReturnValue({
+          name: '바비큐립',
+          quantity: 1,
+          price: 54000,
+          category: 'main',
+        }),
+      },
+    ]);
     eventManager.calculateDiscountAndBenefit(mockOrderManager);
     const benefitInfo = eventManager.getBenefitInfo();
-    expect(benefitInfo.weekendDiscount).toBe(-2023);
+    expect(benefitInfo.weekendDiscount).toBe(-4046);
   });
 
   test('샴페인 증정이 되는지 확인한다.', () => {
