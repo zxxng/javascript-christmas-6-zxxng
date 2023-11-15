@@ -1,9 +1,8 @@
 import { UNIT, DATE, BADGES, BENEFIT_LIST } from '../constants/options.js';
-import { CATEGORY } from '../constants/menu.js';
 
 class EventManager {
-  #benefitInfo;
   #date;
+  #benefitInfo;
 
   constructor(date) {
     this.#benefitInfo = {
@@ -21,25 +20,24 @@ class EventManager {
     return this.#benefitInfo;
   }
 
-  canGetChampagne(billManager) {
-    const totalPrice = billManager.getTotalPrice();
-    if (totalPrice >= UNIT.champagneThreshold) {
-      this.#benefitInfo.isChampagne = true;
-    }
+  getTotalDiscount() {
+    return Object.values(this.#benefitInfo).reduce((total, value) => {
+      return typeof value === 'number' ? total + value : total;
+    }, 0);
   }
 
-  canGetBadge(billManager) {
-    const totalBenefit = billManager.getTotalBenefit();
-    const badge = BADGES.find(({ discountedAmount }) => totalBenefit <= discountedAmount);
-    if (badge) {
-      this.#benefitInfo.badge = badge.badge;
-    }
+  getTotalBenefit() {
+    return this.#benefitInfo.isChampagne
+      ? this.getTotalDiscount() + UNIT.champagneDiscountAmount
+      : this.getTotalDiscount();
   }
 
-  calculateDiscount(orderManager, menuManager) {
+  calculateDiscountAndBenefit(orderManager) {
     this.#calculateXmasDiscount();
     this.#calculateSpecialdayDiscount();
-    this.#calculateDecemberDiscount(orderManager, menuManager);
+    this.#calculateDecemberDiscount(orderManager);
+    this.#canGetChampagne(orderManager);
+    this.#canGetBadge();
   }
 
   #calculateXmasDiscount() {
@@ -55,13 +53,29 @@ class EventManager {
     }
   }
 
-  #calculateDecemberDiscount(orderManager, menuManager) {
-    const orderList = orderManager.getOrderList();
+  #calculateDecemberDiscount(orderManager) {
     const [discountDay, discountCategory] = DATE.isWeekday(this.#getDayOfWeek())
-      ? [BENEFIT_LIST.weekdayDiscount, CATEGORY.dessert]
-      : [BENEFIT_LIST.weekendDiscount, CATEGORY.main];
-    const count = menuManager.countMenuCategory(orderList, discountCategory);
+      ? [BENEFIT_LIST.weekdayDiscount, 'dessert']
+      : [BENEFIT_LIST.weekendDiscount, 'main'];
+    const count = orderManager.filterItemsByProperty('category', discountCategory).length;
     this.#benefitInfo[discountDay] = count * UNIT.decemberDiscountAmount;
+  }
+
+  #canGetChampagne(orderManager) {
+    const totalPrice = orderManager.getTotalPrice();
+    if (totalPrice >= UNIT.champagneThreshold) {
+      this.#benefitInfo.isChampagne = true;
+    }
+  }
+
+  #canGetBadge() {
+    const totalBenefit = this.getTotalBenefit();
+    const badge = BADGES.find(({ discountedAmount }) => {
+      return totalBenefit <= discountedAmount;
+    });
+    if (badge) {
+      this.#benefitInfo.badge = badge.badge;
+    }
   }
 
   #getDayOfWeek() {
