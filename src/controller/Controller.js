@@ -19,8 +19,8 @@ class Controller {
   async startWootecoPlanner() {
     await this.#receiveDateInput();
     await this.#receiveOrderInput();
-    this.#applyEventDiscount();
-    this.#printOrderDetails();
+    this.#applyEvent();
+    this.#showOrderDetailsWithBenefit();
   }
 
   async #receiveDateInput() {
@@ -37,13 +37,13 @@ class Controller {
     });
   }
 
-  #applyEventDiscount() {
+  #applyEvent() {
     if (this.#orderManager.getTotalPrice() >= UNIT.eventThreshold) {
       this.#eventManager.calculateDiscountAndBenefit(this.#orderManager);
     }
   }
 
-  #printOrderDetails() {
+  #showOrderDetailsWithBenefit() {
     OutputView.printResult(this.#orderManager, this.#eventManager);
   }
 

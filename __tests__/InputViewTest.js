@@ -1,6 +1,6 @@
 import { Console } from '@woowacourse/mission-utils';
 import InputView from '../src/view/InputView';
-import REGEXS from '../src/constants/regexs';
+import Order from '../src/models/Order';
 
 const mockQuestions = (input) => {
   Console.readLineAsync = jest.fn().mockResolvedValue(input);
@@ -27,7 +27,8 @@ describe('InputView 테스트', () => {
   const date = 10;
   test.each(validOrder)('order 형식이 유효할 때 값을 반환하는지 확인한다.', async (order) => {
     mockQuestions(order);
-    expect(await InputView.readOrder(date)).toEqual(order.split(REGEXS.commaAndOptionalSpace));
+    const orders = await InputView.readOrder(date);
+    expect(orders.every((order) => order instanceof Order)).toBeTruthy();
   });
 
   const invalidOrder = [

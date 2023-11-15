@@ -2,6 +2,7 @@ import { Console } from '@woowacourse/mission-utils';
 import { WOOTECO_MESSAGE, INPUT_MESSAGE, ERROR_MESSAGE } from '../constants/messages.js';
 import { DATE } from '../constants/options.js';
 import REGEXS from '../constants/regexs.js';
+import Order from '../models/Order.js';
 
 const InputView = (() => {
   const validateDateInput = function (dateInput) {
@@ -31,6 +32,14 @@ const InputView = (() => {
     });
   };
 
+  const createOrder = function (input) {
+    const orderInput = input.split(REGEXS.commaAndOptionalSpace);
+
+    return orderInput.map((item) => {
+      return new Order(item.split('-'));
+    });
+  };
+
   const trimReadLineAsync = async function (promptMessage) {
     const input = await Console.readLineAsync(promptMessage);
 
@@ -51,7 +60,7 @@ const InputView = (() => {
       validateOrderInput(input);
       Console.print(WOOTECO_MESSAGE.benefitsPreview(date));
 
-      return input.split(REGEXS.commaAndOptionalSpace);
+      return createOrder(input);
     },
   };
 })();

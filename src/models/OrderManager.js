@@ -1,12 +1,11 @@
-import Order from './Order.js';
 import { ERROR_MESSAGE } from '../constants/messages.js';
 import { UNIT } from '../constants/options.js';
 
 class OrderManager {
   #orderList;
 
-  constructor(orderInput) {
-    this.#orderList = this.#createOrder(orderInput);
+  constructor(orderList) {
+    this.#orderList = orderList;
     this.#validateOrderList();
   }
 
@@ -34,12 +33,6 @@ class OrderManager {
     return this.#orderList.filter((order) => {
       const orderMenu = order.getOrderMenu();
       return orderMenu[property] === propertyValue;
-    });
-  }
-
-  #createOrder(orderInput) {
-    return orderInput.map((item) => {
-      return new Order(item.split('-'));
     });
   }
 
