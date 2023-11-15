@@ -85,4 +85,4 @@
 
 ## 🔍 프로젝트 실행 구조
 
-<img src='./images/project_execution_structure.png' alt='project_execution_structure' width=700>
+<img src='./images/project_execution_structure.jpeg' alt='project_execution_structure' width=700>
