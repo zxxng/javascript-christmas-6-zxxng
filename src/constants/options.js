@@ -33,8 +33,3 @@ export const BENEFIT_LIST = Object.freeze({
   isChampagne: 'isChampagne',
   badge: 'badge',
 });
-
-export const PROPERTY = Object.freeze({
-  category: 'category',
-  price: 'price',
-});
