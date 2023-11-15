@@ -20,6 +20,10 @@ class EventManager {
     return this.#benefitInfo;
   }
 
+  getBenefitValue(key) {
+    return this.#benefitInfo[key];
+  }
+
   getTotalDiscount() {
     const benefitInfoValue = Object.values(this.#benefitInfo);
 

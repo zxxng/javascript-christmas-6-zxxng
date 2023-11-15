@@ -1,5 +1,6 @@
 import { Console } from '@woowacourse/mission-utils';
 import { TITLE, GIFT_MENU, COMMON, BENEFIT_MESSAGE } from '../constants/orderDetails.js';
+import { BENEFIT_LIST } from '../constants/options.js';
 
 const OutputView = (() => {
   const printAll = function (printFunctions) {
@@ -21,16 +22,18 @@ const OutputView = (() => {
   };
 
   const printGiftMenu = function () {
-    Console.print(this.benefitInfo.isChampagne ? GIFT_MENU : COMMON.none);
+    const isChampagne = this.eventManager.getBenefitValue(BENEFIT_LIST.isChampagne);
+    Console.print(isChampagne ? GIFT_MENU : COMMON.none);
   };
 
   const printBenefit = function () {
     const benefitsToPrint = BENEFIT_MESSAGE.filter(({ benefit }) => {
-      return this.benefitInfo[benefit] && this.benefitInfo[benefit] !== 0;
+      const benefitValue = this.eventManager.getBenefitValue(benefit);
+      return benefitValue && benefitValue !== 0;
     });
     benefitsToPrint.length
       ? benefitsToPrint.forEach(({ benefit, text }) => {
-          Console.print(text(this.benefitInfo[benefit]));
+          Console.print(text(this.eventManager.getBenefitValue(benefit)));
         })
       : Console.print(COMMON.none);
   };
@@ -44,7 +47,8 @@ const OutputView = (() => {
   };
 
   const printEventBadge = function () {
-    Console.print(this.benefitInfo.badge ? this.benefitInfo.badge : COMMON.none);
+    const eventBadge = this.eventManager.getBenefitValue(BENEFIT_LIST.badge);
+    Console.print(eventBadge ? eventBadge : COMMON.none);
   };
 
   const printFunctions = [
@@ -61,7 +65,6 @@ const OutputView = (() => {
     printResult(orderManager, eventManager) {
       this.orderManager = orderManager;
       this.eventManager = eventManager;
-      this.benefitInfo = this.eventManager.getBenefitInfo();
 
       printAll.call(this, printFunctions);
     },
