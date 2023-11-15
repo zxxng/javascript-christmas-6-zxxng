@@ -32,8 +32,8 @@ class Controller {
 
   async #receiveOrderInput() {
     await this.#tryCatchHandler(async () => {
-      const order = await InputView.readOrder(this.#date);
-      this.#orderManager = new OrderManager(order);
+      const orderList = await InputView.readOrder(this.#date);
+      this.#orderManager = new OrderManager(orderList);
     });
   }
 

@@ -21,7 +21,9 @@ class EventManager {
   }
 
   getTotalDiscount() {
-    return Object.values(this.#benefitInfo).reduce((total, value) => {
+    const benefitInfoValue = Object.values(this.#benefitInfo);
+
+    return benefitInfoValue.reduce((total, value) => {
       return typeof value === 'number' ? total + value : total;
     }, 0);
   }
@@ -64,8 +66,8 @@ class EventManager {
   #calculateDiscountTotalQuantity(discountCategory, orderManager) {
     const discountCategoryList = orderManager.filterItemsByProperty('category', discountCategory);
 
-    return discountCategoryList.reduce((sum, item) => {
-      const orderMenu = item.getOrderMenu();
+    return discountCategoryList.reduce((sum, order) => {
+      const orderMenu = order.getOrderMenu();
       return sum + orderMenu.quantity;
     }, 0);
   }

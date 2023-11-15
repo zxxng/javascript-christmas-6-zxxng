@@ -16,16 +16,22 @@ class Order {
   }
 
   #convertToItemObject({ name, quantity }) {
-    const menuCategory = MENU_LIST.find((category) => {
-      return Object.values(category)[0].hasOwnProperty(name);
-    });
-
+    const foundCategory = this.#findCategoryByName(name);
+    const foundCategoryList = Object.values(foundCategory)[0];
+    const foundCategoryName = Object.keys(foundCategory)[0];
     this.#orderMenu = {
       name,
       quantity: Number(quantity),
-      price: Object.values(menuCategory)[0][name],
-      category: Object.keys(menuCategory)[0],
+      price: foundCategoryList[name],
+      category: foundCategoryName,
     };
+  }
+
+  #findCategoryByName(name) {
+    return MENU_LIST.find((category) => {
+      const currentCategory = Object.values(category)[0];
+      return currentCategory.hasOwnProperty(name);
+    });
   }
 
   #validateOrder() {
