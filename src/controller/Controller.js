@@ -1,24 +1,18 @@
 import { Console } from '@woowacourse/mission-utils';
 import InputView from '../view/InputView.js';
 import OutputView from '../view/OutputView.js';
-import MenuManager from '../models/MenuManager.js';
 import OrderManager from '../models/OrderManager.js';
 import EventManager from '../models/EventManager.js';
-import BillManager from '../models/BillManager.js';
 import { UNIT } from '../constants/options.js';
 
 class Controller {
-  #menuManager;
   #orderManager;
   #eventManager;
-  #billManager;
   #date;
 
   constructor() {
-    this.#menuManager = new MenuManager();
     this.#orderManager;
     this.#eventManager;
-    this.#billManager;
     this.#date;
   }
 
@@ -26,7 +20,7 @@ class Controller {
     await this.#receiveDateInput();
     await this.#receiveOrderInput();
     this.#applyEventDiscount();
-    this.#printOrderDetails();
+    // this.#printOrderDetails();
   }
 
   async #receiveDateInput() {
@@ -39,22 +33,19 @@ class Controller {
   async #receiveOrderInput() {
     await this.#tryCatchHandler(async () => {
       const order = await InputView.readOrder(this.#date);
-      this.#orderManager = new OrderManager(order, this.#menuManager);
+      this.#orderManager = new OrderManager(order);
     });
   }
 
   #applyEventDiscount() {
-    this.#billManager = new BillManager(this.#orderManager, this.#eventManager, this.#menuManager);
-    if (this.#billManager.getTotalPrice(this.#orderManager.getOrderList()) >= UNIT.eventThreshold) {
-      this.#eventManager.calculateDiscount(this.#orderManager, this.#menuManager);
-      this.#eventManager.canGetChampagne(this.#billManager);
-      this.#eventManager.canGetBadge(this.#billManager);
+    if (this.#orderManager.getTotalPrice() >= UNIT.eventThreshold) {
+      this.#eventManager.calculateDiscountAndBenefit(this.#orderManager);
     }
   }
 
-  #printOrderDetails() {
-    OutputView.printResult(this.#orderManager, this.#eventManager, this.#billManager);
-  }
+  // #printOrderDetails() {
+  //   OutputView.printResult(this.#orderManager, this.#eventManager);
+  // }
 
   async #tryCatchHandler(asyncFn) {
     try {

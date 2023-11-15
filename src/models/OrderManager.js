@@ -1,4 +1,4 @@
-import Order from './Order';
+import Order from './Order.js';
 import { ERROR_MESSAGE } from '../constants/messages.js';
 import { UNIT } from '../constants/options.js';
 
