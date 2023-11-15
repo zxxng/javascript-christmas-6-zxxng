@@ -9,6 +9,16 @@ const OutputView = (() => {
     });
   };
 
+  const printFunctions = [
+    printMenu,
+    printTotalPrice,
+    printGiftMenu,
+    printBenefit,
+    printTotalBenefit,
+    printEstimatedPayment,
+    printEventBadge,
+  ];
+
   const printMenu = function () {
     this.orderManager.getOrderList().forEach((order) => {
       const orderMenu = order.getOrderMenu();
@@ -25,13 +35,13 @@ const OutputView = (() => {
   };
 
   const printBenefit = function () {
-    const benefitsToPrint = BENEFIT_MESSAGE.filter(
-      ({ benefit }) => this.benefitInfo[benefit] && this.benefitInfo[benefit] !== 0
-    );
+    const benefitsToPrint = BENEFIT_MESSAGE.filter(({ benefit }) => {
+      return this.benefitInfo[benefit] && this.benefitInfo[benefit] !== 0;
+    });
     benefitsToPrint.length
-      ? benefitsToPrint.forEach(({ benefit, text }) =>
-          Console.print(text(this.benefitInfo[benefit]))
-        )
+      ? benefitsToPrint.forEach(({ benefit, text }) => {
+          Console.print(text(this.benefitInfo[benefit]));
+        })
       : Console.print(COMMON.none);
   };
 
@@ -53,15 +63,7 @@ const OutputView = (() => {
       this.eventManager = eventManager;
       this.benefitInfo = this.eventManager.getBenefitInfo();
 
-      printAll.call(this, [
-        printMenu,
-        printTotalPrice,
-        printGiftMenu,
-        printBenefit,
-        printTotalBenefit,
-        printEstimatedPayment,
-        printEventBadge,
-      ]);
+      printAll.call(this, printFunctions);
     },
   };
 })();

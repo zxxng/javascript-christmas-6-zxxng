@@ -30,7 +30,7 @@ class OrderManager {
    * @param {string} property
    * @param {string} propertyValue
    */
-  filterItemsByProperty(property, propertyValue = '') {
+  filterItemsByProperty(property, propertyValue) {
     return this.#orderList.filter((order) => {
       const orderMenu = order.getOrderMenu();
       return orderMenu[property] === propertyValue;
